@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federal Investment in Basic Research</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* PIPS palette */
+  --pips-navy:#00205B;
+  --pips-blue:#001489;
+  --pips-lightblue:#69A9E3;
+  --pips-paleblue:#D4E3FF;
+  --pips-teal:#045258;
+  --pips-sage:#AAC09C;
+  --pips-gray:#63666A;
+  --pips-gray-l:#D9D9D9;
+  --pips-gray-xl:#E8E8E8;
+  --pips-gray-xxl:#F2F2F2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--pips-navy); color:var(--pips-gray-xxl); line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- 1. title ---------- */
+.cover{
+  min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+  max-width:920px; margin:0 auto; padding:40px;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:.84rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--pips-lightblue); margin-bottom:22px;
+}
+h1{
+  font-size:clamp(2.2rem,5.5vw,4rem); font-weight:600; line-height:1.06;
+  letter-spacing:-.028em; margin-bottom:28px; color:#fff;
+}
+h1 .em{color:var(--pips-lightblue)}
+.byline{
+  font-family:'IBM Plex Mono',monospace; font-size:.88rem; color:var(--pips-lightblue);
+  letter-spacing:.05em; border-top:1px solid rgba(105,169,227,.32); padding-top:16px;
+  opacity:.8;
+}
+.scroll-cue{
+  margin-top:56px; font-family:'IBM Plex Mono',monospace; font-size:.84rem;
+  color:var(--pips-paleblue); letter-spacing:.1em; text-transform:uppercase;
+}
+.scroll-cue span{display:inline-block; animation:bob 1.9s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---------- 2 & 4. pinned text ---------- */
+.chapter{position:relative; --band:31vh; --aspect:2.5; --furniture:215px}
+.pin{
+  position:sticky; top:0; z-index:3;
+  background:var(--pips-navy);
+  height:var(--band); display:flex; align-items:stretch;
+  padding:0 40px;
+  border-bottom:1px solid rgba(105,169,227,.22);
+}
+.pin > .pin-inner:not(.narration){display:flex; align-items:center}
+.pin-inner{max-width:1060px; margin:0 auto; width:100%}
+.reveal-line{
+  font-size:clamp(1.25rem,2.8vw,2.1rem); font-weight:400; line-height:1.28;
+  letter-spacing:-.018em; color:#fff; max-width:880px;
+  opacity:0; transform:translateY(34px);
+  transition:opacity .95s cubic-bezier(.22,.61,.36,1), transform .95s cubic-bezier(.22,.61,.36,1);
+}
+.chapter.is-in .reveal-line{opacity:1; transform:translateY(0)}
+.pin-spacer{height:62vh}
+.chapter-tail{height:80vh}
+
+/* ---------- 3 & 5. chart panels ---------- */
+.chart-panel{
+  position:sticky; top:var(--band); z-index:1;
+  height:calc(100vh - var(--band));
+  display:flex; align-items:flex-start;
+  padding-top:26px; overflow:hidden;
+  background:var(--pips-navy);
+}
+.cp-inner{
+  max-width:1060px; margin:0 auto; width:100%; padding:0 40px;
+  opacity:0; transform:translateY(48px);
+  transition:opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
+}
+.chart-panel.is-in .cp-inner{opacity:1; transform:translateY(0)}
+.fig-title{font-size:1.18rem; font-weight:600; margin-bottom:4px; color:#fff}
+.fig-sub{
+  font-family:'IBM Plex Mono',monospace; font-size:.86rem;
+  color:var(--pips-lightblue); margin-bottom:12px;
+}
+.readout{
+  display:flex; align-items:baseline; gap:18px; margin:8px 0 6px;
+  font-family:'IBM Plex Mono',monospace; flex-wrap:wrap;
+}
+.readout .lab{font-size:1rem; color:var(--pips-paleblue); letter-spacing:.05em}
+.readout .val{
+  font-size:clamp(1.5rem,3.1vw,2.3rem); font-weight:600; color:var(--pips-lightblue);
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1.05;
+  white-space:nowrap;
+}
+.narration{
+  height:100%; display:flex; flex-direction:column; justify-content:center;
+  gap:9px; max-width:1000px;
+}
+.narr-line{
+  font-size:clamp(1.08rem,1.85vw,1.42rem); font-weight:400; line-height:1.34;
+  letter-spacing:-.008em; color:#fff;
+  opacity:0; transform:translateY(9px);
+  transition:opacity .55s ease, transform .55s ease;
+}
+.narr-line.is-on{opacity:1; transform:translateY(0)}
+#nPERF .narr-line{font-size:clamp(1.18rem,2.5vw,1.88rem); line-height:1.26; letter-spacing:-.016em}
+.narr-line strong{font-weight:600; color:var(--pips-lightblue)}
+.narr-line[data-narr="0"]{
+  font-size:clamp(1.25rem,2.8vw,2.1rem); line-height:1.24; letter-spacing:-.018em;
+}
+#chapter1{--aspect:2.5;  --furniture:224px}
+#chapter2{--aspect:2.5;  --furniture:352px; --band:24vh}
+#chapter3{--aspect:2.5;  --furniture:239px}
+#chapter4{--aspect:2.33; --furniture:239px}
+#chapter5{--aspect:2.5;  --furniture:239px}
+#chapter6{--aspect:2.39; --furniture:199px}
+#chapterBAD{--aspect:2.5;  --furniture:239px}
+#chapterPBR{--aspect:2.48; --furniture:239px}
+#pbr-note{
+  border-left:3px solid var(--pips-lightblue);
+  background:rgba(105,169,227,.09);
+  border-radius:0 5px 5px 0; padding:11px 16px; max-width:980px; font-size:1rem; line-height:1.45;
+}
+#pbr-note p{margin:0}
+#pbr-note a{color:#fff; border-bottom:1.5px solid var(--pips-lightblue); text-decoration:none}
+#pbr-note a:hover{color:var(--pips-lightblue)}
+.closing{
+  min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+  max-width:1000px; margin:0 auto; padding:80px 40px;
+}
+.closing-line{
+  font-size:clamp(1.3rem,2.9vw,2.15rem); font-weight:400; line-height:1.3;
+  letter-spacing:-.018em; color:#fff; max-width:880px; margin-bottom:44px;
+}
+.closing-meta{
+  font-family:'IBM Plex Mono',monospace; font-size:.86rem; color:var(--pips-lightblue);
+  border-top:1px solid rgba(105,169,227,.32); padding-top:18px; margin-bottom:34px;
+}
+.closing-sources .cs-head{
+  font-family:'IBM Plex Mono',monospace; font-size:.78rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--pips-lightblue); margin-bottom:12px;
+}
+.closing-sources ul{list-style:none; margin:0; padding:0}
+.closing-sources li{margin-bottom:9px; font-size:.95rem}
+.closing-sources a{
+  color:var(--pips-gray-xxl); text-decoration:none;
+  border-bottom:1px solid rgba(105,169,227,.45); padding-bottom:1px;
+}
+.closing-sources a:hover{color:var(--pips-lightblue); border-bottom-color:var(--pips-lightblue)}
+#chapterPBR{--aspect:2.6; --furniture:372px}
+#chapterPERF{--aspect:2.5; --furniture:246px}
+.step-sentinel{height:82vh}
+.ch1-pin{display:flex; flex-direction:column; justify-content:center; height:100%; gap:14px}
+.interjection{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(.9rem,1.5vw,1.08rem); color:var(--pips-lightblue);
+  padding-left:26px;
+  opacity:0; transform:translateY(8px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.interjection.is-on{opacity:1; transform:translateY(0)}
+.interjection a{
+  color:#fff; text-decoration:none;
+  border-bottom:1.5px solid var(--pips-lightblue);
+  padding-bottom:1px; transition:border-color .25s ease, color .25s ease;
+}
+.interjection a:hover{color:var(--pips-lightblue); border-bottom-color:#fff}
+.interjection a::after{content:' \2197'; font-size:.85em; opacity:.8}
+.fig-subsub{
+  font-family:'IBM Plex Mono',monospace; font-size:1rem; color:#fff;
+  margin:10px 0 4px; min-height:1.4em;
+}
+.fig-note{
+  font-size:1.1rem; color:#fff; margin-top:14px; max-width:780px;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.fig-note.is-on{opacity:1; transform:translateY(0)}
+.fig-src{
+  font-size:.8rem; color:var(--pips-gray-l); opacity:.72; margin-top:12px;
+  line-height:1.5; max-width:760px;
+}
+svg{width:100%; height:auto; display:block; overflow:visible;
+  max-width:calc((100vh - var(--band) - var(--furniture,215px)) * var(--aspect,2.5));
+  margin:0 auto}
+
+
+.axis line{stroke:rgba(212,227,255,.28); stroke-width:1}
+.axis text{fill:var(--pips-paleblue); font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px; opacity:.85}
+.gridline{stroke:rgba(212,227,255,.11); stroke-width:1}
+.series{fill:none; stroke-linejoin:round; stroke-linecap:round}
+.endlabel{font-family:'IBM Plex Mono',monospace; font-size:13.5px}
+
+@media (max-width:860px){
+  .cover{padding-left:22px; padding-right:22px}
+  .chapter{--band:26vh}
+  .pin{padding:0 22px}
+  .cp-inner{padding:0 22px}
+  .pin-spacer{height:48vh}
+  .chapter-tail{height:60vh}
+  svg{max-height:38vh}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important; animation-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<header class="cover">
+  <div class="eyebrow">Potomac Institute for Policy Studies</div>
+  <h1>Seventy years of federal<br>investment in <span class="em">basic research</span></h1>
+  <div class="byline">Analysis and visualization: R Loewen for Potomac Institute</div>
+  <div class="scroll-cue"><span>&darr;</span> &nbsp;Scroll</div>
+</header>
+
+<!-- 2 + 3 -->
+<section class="chapter" id="chapter1" style="--band:34vh">
+  <div class="pin"><div class="pin-inner ch1-pin">
+    <p class="reveal-line">Since the government began measuring federal investment in the 1950s, we see a long and bipartisan history of continued support.</p>
+    <p class="interjection" id="interject">&mdash; Wait, I don&rsquo;t know what <a href="definitions.html" target="_blank" rel="noopener">basic research</a> is yet.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panel1">
+    <div class="cp-inner">
+      <div class="fig-title">Federal basic research expenditures, 1953&ndash;2024</div>
+      <div class="fig-sub">Constant 2017 dollars</div>
+      <div class="readout"><span class="lab" id="r1-lab">1953</span><span class="val" id="r1-val">$2.0B</span></div>
+      <div id="c1"></div>
+      <div class="fig-src">Source: NSF National Center for Science and Engineering Statistics (NCSES), National Patterns of R&amp;D Resources (NSF 26-313, released February 2026). Table 7, basic research expenditures by funding sector. Constant dollar conversions use the NCSES GDP deflator, indexed to 2017. Data for 2023 and 2024 are subject to revision.</div>
+    </div>
+  </div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- basic / applied / development -->
+<section class="chapter" id="chapterBAD">
+  <div class="pin"><div class="pin-inner">
+    <p class="reveal-line">Basic research is only one part of the larger federal research portfolio, which also includes applied research and development.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panelBAD">
+    <div class="cp-inner">
+      <div class="fig-title">Federal R&amp;D budget authority by type, 1975&ndash;2026</div>
+      <div class="fig-sub">Constant 2017 dollars, stacked</div>
+      <div class="readout"><span class="lab" id="rBAD-lab">Basic research</span><span class="val" id="rBAD-val">$0B</span></div>
+      <div id="cBAD"></div>
+      <div class="fig-src">Source: American Association for the Advancement of Science, estimates built on OMB budget authority data, as used in the first tab of the HistoricSpendDash dashboard. Series are summed from the agency rows so that all three types reconcile to the same universe. FY2026 reflects enacted appropriations. Data provided by AAAS to Potomac Institute as of March 1, 2026.</div>
+    </div>
+  </div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- funding vs performance vs consumption -->
+<section class="chapter" id="chapterPERF" style="--band:46vh">
+  <div class="pin"><div class="pin-inner narration" id="nPERF">
+    <p class="narr-line is-on" data-narr="0">We are looking at how basic research is <strong>funded</strong>. Who <strong>performs</strong> the research is different: academic institutions are the largest performers of federally funded basic research.</p>
+    <p class="narr-line" data-narr="1">The important missing piece is <strong>consumption and impact</strong>. It is very hard to track who uses federally funded basic research and to measure its impact.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panelPERF">
+    <div class="cp-inner">
+      <div class="fig-title">Who performs federally funded basic research, 1953&ndash;2024</div>
+      <div class="fig-sub">Share of federally funded basic research expenditures, percent</div>
+      <div class="readout"><span class="lab" id="rPERF-lab">Higher education, FY2024</span><span class="val" id="rPERF-val">0%</span></div>
+      <div id="cPERF"></div>
+      <div class="fig-src">Source: NSF National Center for Science and Engineering Statistics (NCSES), National Patterns of R&amp;D Resources (NSF 26-313, released February 2026). Table 7, basic research expenditures by funding sector and performer, federal funding block. Data for 2023 and 2024 are subject to revision.</div>
+    </div>
+  </div>
+  <div class="step-sentinel" data-perfstep="1"></div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- 4 + 5 -->
+<section class="chapter" id="chapter2">
+  <div class="pin"><div class="pin-inner">
+    <p class="reveal-line">The lion&rsquo;s share of historic growth in federal funding for basic research has gone to NIH and HHS.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panel2">
+    <div class="cp-inner">
+      <div class="fig-title">Federal basic research obligations by agency, FYs 1954&ndash;2025</div>
+      <div class="fig-sub">Constant 2017 dollars, stacked</div>
+      <div class="readout"><span class="lab">HHS/NIH share of federal basic research</span><span class="val" id="r2-val">15% in 1954</span></div>
+      <div id="c2"></div>
+      <div class="fig-note is-on">HHS/NIH went from 15 percent of federal basic research obligations in 1954 ($0.1B constant 2017) to 50 percent in 2025 ($17.5B constant 2017).</div>
+      <div class="fig-src">Sources: FYs 1967&ndash;2025 agency obligations from NSF NCSES, Survey of Federal Funds for R&amp;D, Table 26 (agency) and Table 1 (total) in NSF 26-316 (FYs 2024&ndash;25), with FY2023 final values from NSF 25-328 Table 26. FYs 1954&ndash;1966 reconstructed from original NSF Federal Funds for R&amp;D survey volumes (V.4&ndash;V.17), cross-checked against CRS Report 95-1209, &ldquo;Federal R&amp;D Funding: A Concise History&rdquo; (Aug 14, 1998). NASA pre-1967 figures computed as residual against the NSF 26-316 Table 1 restated total. Constant 2017$ via GDP chained price index, OMB Historical Table 10.1. FY2025 preliminary.</div>
+    </div>
+  </div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- 6 + 7 -->
+<section class="chapter" id="chapter3">
+  <div class="pin"><div class="pin-inner">
+    <p class="reveal-line">OECD estimates that the United States outspends every other nation on basic research, including China.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panel3">
+    <div class="cp-inner">
+      <div class="fig-title">Basic research expenditure, 1990&ndash;2024</div>
+      <div class="fig-sub">Billions of current US dollars at purchasing power parity</div>
+      <div class="readout"><span class="lab" id="r3-lab">United States</span><span class="val" id="r3-val">$0B</span></div>
+      <div id="c3"></div>
+      <div class="fig-src">Data: OECD Main Science and Technology Indicators (MSTI), accessed April 2026. Basic research is published by OECD as a percentage of GDP. PPP comparisons are calculated using OECD&rsquo;s PPP estimates of gross domestic expenditure on R&amp;D (GERD). Analysis is limited to countries with data coverage. Analysis and visualization by Potomac Institute for Policy Studies.</div>
+    </div>
+  </div>
+  <div class="chapter-tail"></div>
+</section>
+
+
+
+<!-- 10 + 11 -->
+<section class="chapter" id="chapter4">
+  <div class="pin"><div class="pin-inner">
+    <p class="reveal-line">Federal investment in basic research is concentrated in life sciences.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panel4">
+    <div class="cp-inner">
+      <div class="fig-title">Federal obligations for basic research by agency and field of R&amp;D, FY 2024</div>
+      <div class="fig-sub">Billions of dollars</div>
+      <div id="c4"></div>
+      <div class="fig-src">Source: National Science Foundation, National Center for Science and Engineering Statistics, Federal Funds for Research and Development, NSF 26-316, Table 29. Other agencies includes the DOE Office of Science, the Department of Veterans Affairs, and all agencies not shown separately. Computer sciences and mathematics are combined.</div>
+    </div>
+  </div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- 8 + 9 -->
+<section class="chapter" id="chapter5">
+  <div class="pin"><div class="pin-inner">
+    <p class="reveal-line">Industry investment in basic research has gone up alongside government, although government remains the anchor investor.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panel5">
+    <div class="cp-inner">
+      <div class="fig-title">US basic research expenditures by funder, 1953&ndash;2024</div>
+      <div class="fig-sub">Constant 2017 dollars, stacked</div>
+      <div class="readout"><span class="lab" id="r5-lab">Federal, 2024</span><span class="val" id="r5-val">$46.1B</span></div>
+      <div id="c5"></div>
+      <div class="fig-src">Source: NSF National Center for Science and Engineering Statistics (NCSES), National Patterns of R&amp;D Resources (NSF 26-313, released February 2026). Table 7, basic research expenditures by funding sector. Constant dollar conversions use the NCSES GDP deflator, indexed to 2017. Data for 2023 and 2024 are subject to revision.</div>
+    </div>
+  </div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- 12 + 13 -->
+<section class="chapter" id="chapter6" style="--band:37vh">
+  <div class="pin"><div class="pin-inner narration" id="n6">
+    <p class="narr-line is-on" data-narr="0">The government basic research portfolio looks a lot like the industry portfolio.</p>
+    <p class="narr-line" data-narr="1">The overlap coefficient in 2023 was 70%, meaning 70 cents out of every dollar of funding are spent on a similar portfolio.</p>
+    <p class="narr-line" data-narr="2">Life sciences is the largest single field for each.</p>
+    <p class="narr-line" data-narr="3">The federal government puts more emphasis on the physical sciences and the environment.</p>
+    <p class="narr-line" data-narr="4">The private sector puts more emphasis on engineering and computer sciences.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panel6">
+    <div class="cp-inner">
+      <div class="fig-title" id="c6-title">Basic research by field of R&amp;D: federal and industry</div>
+      <div class="fig-sub">Share of each funder&rsquo;s own portfolio, percent</div>
+      <div id="c6"></div>
+      <div class="fig-src">Sources: National Science Foundation, National Center for Science and Engineering Statistics, Federal Funds for Research and Development, NSF 25-328, Table 29, FY2023; and Business Enterprise Research and Development Survey, NSF 25-354, Table 27, 2023. Industry figures are company-funded and company-performed basic research. Industry sectors are mapped to fields of R&amp;D by NAICS crosswalk. Psychology is grouped with other fields on the federal side to match the industry taxonomy.</div>
+    </div>
+  </div>
+  <div class="step-sentinel" data-c6step="1"></div>
+  <div class="step-sentinel" data-c6step="2"></div>
+  <div class="step-sentinel" data-c6step="3"></div>
+  <div class="step-sentinel" data-c6step="4"></div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- FY2026 request to enacted -->
+<section class="chapter" id="chapterPBR" style="--band:24vh">
+  <div class="pin"><div class="pin-inner narration" id="nPBR">
+    <p class="narr-line is-on" data-narr="0">The FY2026 President&rsquo;s Budget Request proposed deep cuts to federal basic research.</p>
+    <p class="narr-line" data-narr="1">Congress restored the cuts and added a small amount, barely beating inflation: the 4% nominal increase is 1.8% in real terms.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panelPBR">
+    <div class="cp-inner">
+      <div class="fig-title">Agency basic research budgets</div>
+      <div class="fig-sub">Budget authority, % change</div>
+      <div class="fig-subsub" id="rPBR-lab">FY2026 presidential budget request compared to FY2025 enacted</div>
+      <div id="cPBR"></div>
+      <div class="fig-note" id="pbr-note"><p>The <a href="https://www.whitehouse.gov/omb/information-resources/budget/" target="_blank" rel="noopener">FY2027 President&rsquo;s Budget Request</a>, released April 3, 2026, proposed deep to moderate cuts to the topline discretionary budgets of NSF, EPA, NASA, Agriculture, HHS, Commerce, and Energy, but did not provide specific details on R&amp;D. As of September 2026, the government is operating under a continuing resolution with no FY2027 appropriations bills enacted.</p></div>
+      <div class="fig-src">Source: American Association for the Advancement of Science R&amp;D appropriations tracking, FY2026 columns for the President&rsquo;s Budget Request and final enacted appropriations, measured against FY2025 enacted. Figures are basic research budget authority. FY2027 topline figures are from OMB Summary Table S-3, discretionary budget authority by agency.</div>
+    </div>
+  </div>
+  <div class="step-sentinel" data-pbrstep="1"></div>
+  <div class="step-sentinel" data-pbrstep="2"></div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- closing -->
+<section class="closing" id="closing">
+  <p class="closing-line">It remains to be seen how Congress will carry forward the legacy of federal support for basic research.</p>
+  <div class="closing-meta">Potomac Institute for Policy Studies &middot; Analysis and visualization: R Loewen &middot; Updated 15 September 2026</div>
+  <div class="closing-sources">
+    <div class="cs-head">References</div>
+    <ul>
+      <li><a href="https://ncses.nsf.gov/data-collections/national-patterns" target="_blank" rel="noopener">NSF NCSES, National Patterns of R&amp;D Resources</a></li>
+      <li><a href="https://ncses.nsf.gov/surveys/federal-funds-research-development" target="_blank" rel="noopener">NSF NCSES, Survey of Federal Funds for Research and Development</a></li>
+      <li><a href="https://ncses.nsf.gov/surveys/business-enterprise-research-development" target="_blank" rel="noopener">NSF NCSES, Business Enterprise Research and Development Survey</a></li>
+      <li><a href="https://www.aaas.org/programs/r-d-budget-and-policy/interactive-dashboards" target="_blank" rel="noopener">AAAS, R&amp;D Budget and Policy interactive dashboards</a></li>
+      <li><a href="https://www.oecd.org/en/data/datasets/main-science-and-technology-indicators.html" target="_blank" rel="noopener">OECD, Main Science and Technology Indicators</a></li>
+      <li><a href="https://www.whitehouse.gov/omb/information-resources/budget/" target="_blank" rel="noopener">OMB, Budget of the U.S. Government</a></li>
+    </ul>
+  </div>
+</section>
+
+<script>
+const DEFINITIONS_DOC = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Definitions and Measurements of Basic Research<\/title>\n<link href=\"https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap\" rel=\"stylesheet\">\n<style>\n:root{\n  --pips-navy:#00205B;\n  --pips-blue:#001489;\n  --pips-lightblue:#69A9E3;\n  --pips-paleblue:#D4E3FF;\n  --pips-teal:#045258;\n  --pips-sage:#AAC09C;\n  --pips-gray:#63666A;\n  --pips-gray-l:#D9D9D9;\n  --pips-gray-xl:#E8E8E8;\n  --pips-gray-xxl:#F2F2F2;\n}\n*{margin:0;padding:0;box-sizing:border-box}\nbody{\n  font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;\n  background:var(--pips-navy); color:var(--pips-gray-xxl);\n  line-height:1.6; -webkit-font-smoothing:antialiased;\n  padding:56px 40px 90px;\n}\n.wrap{max-width:820px; margin:0 auto}\n.eyebrow{\n  font-family:'IBM Plex Mono',monospace; font-size:.84rem; letter-spacing:.14em;\n  text-transform:uppercase; color:var(--pips-lightblue); margin-bottom:18px;\n}\nh1{\n  font-size:clamp(1.9rem,4vw,2.9rem); font-weight:600; line-height:1.1;\n  letter-spacing:-.025em; color:#fff; margin-bottom:16px;\n}\n.standfirst{\n  font-size:1.1rem; color:var(--pips-paleblue); max-width:640px; margin-bottom:14px;\n}\n.close-hint{\n  font-family:'IBM Plex Mono',monospace; font-size:.82rem; color:var(--pips-lightblue);\n  opacity:.75; border-top:1px solid rgba(105,169,227,.28); padding-top:14px;\n  margin-bottom:44px;\n}\n.def{\n  border-left:3px solid var(--pips-lightblue);\n  background:rgba(105,169,227,.07);\n  border-radius:0 6px 6px 0;\n  padding:22px 26px; margin-bottom:26px;\n}\n.def h2{\n  font-size:1.22rem; font-weight:600; color:#fff; margin-bottom:3px;\n}\n.def .cite{\n  font-family:'IBM Plex Mono',monospace; font-size:.82rem;\n  color:var(--pips-lightblue); margin-bottom:14px;\n}\n.def p{font-size:1.02rem; margin-bottom:12px}\n.def p:last-child{margin-bottom:0}\n.def .para-no{\n  font-family:'IBM Plex Mono',monospace; color:var(--pips-lightblue);\n  font-size:.86rem; margin-right:6px;\n}\n.def ul{margin:10px 0 0 20px}\n.def li{margin-bottom:10px; font-size:1.02rem}\n.def li:last-child{margin-bottom:0}\n.def.oriented{border-left-color:var(--pips-sage); background:rgba(170,192,156,.07)}\n.def.oriented .cite{color:var(--pips-sage)}\n.note{\n  font-size:.86rem; color:var(--pips-gray-l); opacity:.72;\n  border-top:1px solid rgba(105,169,227,.22); padding-top:18px; margin-top:34px;\n  line-height:1.55;\n}\n@media (max-width:700px){\n  body{padding:34px 22px 60px}\n  .def{padding:18px 20px}\n}\n<\/style>\n<\/head>\n<body>\n<div class=\"wrap\">\n  <div class=\"eyebrow\">Potomac Institute for Policy Studies<\/div>\n  <h1>Definitions and measurements of basic research<\/h1>\n  <p class=\"standfirst\">There are three definitions of basic research that inform this project. These slightly differ but basically agree that the work is undertaken to increase the store of knowledge without being directed to a particular application. Note that this refers us back to the intent of the research team and not the outcomes of the research.<\/p>\n  <p class=\"standfirst\">There are four different measurements that we chart in this project, which represent different stages of the funding process.<\/p>\n  <p class=\"close-hint\">Close this tab to return to the story.<\/p>\n\n  <div class=\"def\">\n    <h2>Office of Management and Budget<\/h2>\n    <div class=\"cite\">Circular No. A-11, August 2025<\/div>\n    <p>Basic research is experimental or theoretical work undertaken primarily to acquire new knowledge of the underlying foundations of phenomena and observable facts. Basic research may include activities with broad or general applications in mind, such as the study of how plant genomes change, but excludes research directed towards a specific application or requirement, such as the optimization of the genome of a specific crop species.<\/p>\n  <\/div>\n\n  <div class=\"def\">\n    <h2>Department of Defense<\/h2>\n    <div class=\"cite\">Financial Management Regulation 7000.14-R, Vol. 2B, Ch. 5, September 2022<\/div>\n    <p>Basic research is systematic study directed toward greater knowledge or understanding of the fundamental aspects of phenomena and of observable facts without specific applications towards processes or products in mind. It includes all scientific study and experimentation directed toward increasing fundamental knowledge and understanding in those fields of the physical, engineering, environmental, and life sciences related to long-term national security needs. It is farsighted, high payoff research that provides the basis for technological progress.<\/p>\n    <p>Basic research may lead to: (a) subsequent applied research and advanced technology developments in Defense-related technologies, and (b) new and improved military functional capabilities in areas such as communications, detection, tracking, surveillance, propulsion, mobility, guidance and control, navigation, energy conversion, materials and structures, and personnel support. Program elements in this category involve pre-Milestone A efforts.<\/p>\n  <\/div>\n\n  <div class=\"def\">\n    <h2>Organisation for Economic Co-operation and Development<\/h2>\n    <div class=\"cite\"><a href=\"https://www.oecd.org/publications/frascati-manual-2015-9789264239012-en.htm\" target=\"_blank\" rel=\"noopener\" style=\"color:inherit\">Frascati Manual 2015, &sect;&sect;2.25&ndash;2.27<\/a><\/div>\n    <p><span class=\"para-no\">2.25<\/span>Basic research is experimental or theoretical work undertaken primarily to acquire new knowledge of the underlying foundations of phenomena and observable facts, without any particular application or use in view.<\/p>\n    <p><span class=\"para-no\">2.26<\/span>Basic research analyzes properties, structures and relationships with a view to formulating and testing hypotheses, theories or laws. The reference to no &ldquo;particular application in view&rdquo; in the definition of basic research is crucial, as the performer may not know about potential applications when doing the research or responding to survey questionnaires. The results of basic research are not generally sold but are usually published in scientific journals or circulated to interested colleagues. Occasionally, the publication of basic research may be restricted for reasons of national security.<\/p>\n    <p><span class=\"para-no\">2.27<\/span>In basic research, the researcher is expected to have some freedom to set goals. Such research is usually performed in the higher education sector but also to some extent in the government sector. Basic research can be oriented or directed towards some broad fields of general interest, with the explicit goal of a range of future applications. Business enterprises in the private sector may also undertake basic research even though there may be no specific commercial applications anticipated in the short term.<\/p>\n  <\/div>\n\n  <div class=\"def oriented\">\n    <h2>Pure and oriented basic research<\/h2>\n    <div class=\"cite\">Frascati Manual 2015, &sect;2.28<\/div>\n    <ul>\n      <li><strong>Pure basic research<\/strong> is carried out for the advancement of knowledge, without seeking economic or social benefits or making an active effort to apply the results to practical problems or to transfer the results to sectors responsible for their application.<\/li>\n      <li><strong>Oriented basic research<\/strong> is carried out with the expectation that it will produce a broad base of knowledge likely to form the basis of the solution to recognized or expected current or future problems or possibilities.<\/li>\n    <\/ul>\n  <\/div>\n\n  <div class=\"def oriented\" id=\"measurements\">\n    <h2>Budget authority, obligations, outlays, and expenditures<\/h2>\n    <div class=\"cite\">Why the same program appears at different values in different tables<\/div>\n    <p>Federal spending is counted at three different moments, and the three measures do not agree in any given year. Charts in this piece draw on all three, so the measure is named in each source note.<\/p>\n    <ul>\n      <li><strong>Budget authority<\/strong> is the legal authority to incur obligations. It is what Congress acts on during appropriations, which is why AAAS uses it as its primary measure, and why NSF 25-310 and the DOD R-1 are comparable to it.<\/li>\n      <li><strong>Obligations<\/strong> are binding commitments that will result in outlays, immediately or in the future. The NSF Survey of Federal Funds for Research and Development reports obligations. Because RDT&amp;E appropriations are multi-year money, obligations in a given year may draw on budget authority enacted in an earlier year.<\/li>\n      <li><strong>Outlays<\/strong> are the actual disbursements. For basic research these lag budget authority by the longest interval of the three.<\/li>\n      <li><strong>Expenditures<\/strong> is another way of looking at outlays, often reported from the perspective of funds received by a performer.<\/li>\n    <\/ul>\n  <\/div>\n<\/div>\n<\/body>\n<\/html>";
+const DATA = {"fedc":[[1953,1971],[1954,2141],[1955,2304],[1956,2748],[1957,3062],[1958,3562],[1959,4353],[1960,5121],[1961,6207],[1962,7686],[1963,9018],[1964,10401],[1965,11463],[1966,12178],[1967,13001],[1968,13120],[1969,12811],[1970,12390],[1971,12062],[1972,12000],[1973,12196],[1974,12366],[1975,12285],[1976,12931],[1977,13594],[1978,14846],[1979,15394],[1980,15613],[1981,15295],[1982,15562],[1983,16515],[1984,17560],[1985,18508],[1986,19711],[1987,20871],[1988,21992],[1989,23428],[1990,23703],[1991,24927],[1992,25054],[1993,25546],[1994,25577],[1995,25381],[1996,26499],[1997,27767],[1998,29198],[1999,31449],[2000,33407],[2001,35399],[2002,39362],[2003,42648],[2004,43153],[2005,43604],[2006,43258],[2007,43963],[2008,42972],[2009,44322],[2010,44775],[2011,42959],[2012,41036],[2013,38288],[2014,38415],[2015,38267],[2016,39583],[2017,39275],[2018,41398],[2019,42770],[2020,43601],[2021,42999],[2022,44793],[2023,45848],[2024,46084]],"funders":{"Federal":[[1953,1971],[1954,2141],[1955,2304],[1956,2748],[1957,3062],[1958,3562],[1959,4353],[1960,5121],[1961,6207],[1962,7686],[1963,9018],[1964,10401],[1965,11463],[1966,12178],[1967,13001],[1968,13120],[1969,12811],[1970,12390],[1971,12062],[1972,12000],[1973,12196],[1974,12366],[1975,12285],[1976,12931],[1977,13594],[1978,14846],[1979,15394],[1980,15613],[1981,15295],[1982,15562],[1983,16515],[1984,17560],[1985,18508],[1986,19711],[1987,20871],[1988,21992],[1989,23428],[1990,23703],[1991,24927],[1992,25054],[1993,25546],[1994,25577],[1995,25381],[1996,26499],[1997,27767],[1998,29198],[1999,31449],[2000,33407],[2001,35399],[2002,39362],[2003,42648],[2004,43153],[2005,43604],[2006,43258],[2007,43963],[2008,42972],[2009,44322],[2010,44775],[2011,42959],[2012,41036],[2013,38288],[2014,38415],[2015,38267],[2016,39583],[2017,39275],[2018,41398],[2019,42770],[2020,43601],[2021,42999],[2022,44793],[2023,45848],[2024,46084]],"Business":[[1953,1145],[1954,1245],[1955,1391],[1956,1755],[1957,1814],[1958,1936],[1959,1897],[1960,2210],[1961,2305],[1962,2486],[1963,2648],[1964,2666],[1965,2784],[1966,3005],[1967,2820],[1968,2935],[1969,2819],[1970,2630],[1971,2595],[1972,2553],[1973,2598],[1974,2578],[1975,2532],[1976,2640],[1977,2766],[1978,2910],[1979,3066],[1980,3267],[1981,3714],[1982,4051],[1983,4514],[1984,5245],[1985,5735],[1986,7965],[1987,8058],[1988,7771],[1989,8208],[1990,7942],[1991,11674],[1992,11044],[1993,11116],[1994,11170],[1995,10031],[1996,12189],[1997,14964],[1998,9421],[1999,10447],[2000,11185],[2001,12641],[2002,11572],[2003,11709],[2004,11227],[2005,12051],[2006,11210],[2007,12977],[2008,15673],[2009,18244],[2010,19468],[2011,16288],[2012,16422],[2013,22205],[2014,23602],[2015,23394],[2016,26392],[2017,26936],[2018,29496],[2019,32746],[2020,36317],[2021,38679],[2022,38776],[2023,38461],[2024,39553]],"HigherEd":[[1953,45],[1954,62],[1955,84],[1956,108],[1957,134],[1958,159],[1959,186],[1960,216],[1961,254],[1962,302],[1963,359],[1964,428],[1965,519],[1966,625],[1967,774],[1968,855],[1969,893],[1970,969],[1971,1008],[1972,976],[1973,956],[1974,983],[1975,948],[1976,966],[1977,1073],[1978,1194],[1979,1291],[1980,1381],[1981,1428],[1982,1565],[1983,1716],[1984,1857],[1985,2116],[1986,2434],[1987,2634],[1988,2781],[1989,2999],[1990,3253],[1991,3470],[1992,3513],[1993,3534],[1994,3670],[1995,3751],[1996,4019],[1997,4542],[1998,4984],[1999,5412],[2000,5932],[2001,6400],[2002,7033],[2003,7391],[2004,7544],[2005,8054],[2006,8669],[2007,9186],[2008,9620],[2009,9308],[2010,8913],[2011,9281],[2012,9909],[2013,10442],[2014,10702],[2015,11255],[2016,11916],[2017,12369],[2018,12791],[2019,13184],[2020,13438],[2021,13561],[2022,14202],[2023,15148],[2024,15882]],"Nonprofit":[[1953,208],[1954,228],[1955,250],[1956,284],[1957,339],[1958,391],[1959,428],[1960,458],[1961,540],[1962,634],[1963,702],[1964,707],[1965,736],[1966,781],[1967,821],[1968,842],[1969,884],[1970,924],[1971,959],[1972,985],[1973,970],[1974,1000],[1975,1005],[1976,1041],[1977,1110],[1978,1140],[1979,1160],[1980,1175],[1981,1189],[1982,1292],[1983,1406],[1984,1514],[1985,1646],[1986,1806],[1987,1980],[1988,2145],[1989,2320],[1990,2506],[1991,2708],[1992,2909],[1993,3095],[1994,3295],[1995,3475],[1996,3724],[1997,3900],[1998,4244],[1999,4578],[2000,5211],[2001,5738],[2002,6442],[2003,6964],[2004,6827],[2005,7187],[2006,7421],[2007,8036],[2008,8796],[2009,9253],[2010,9479],[2011,9445],[2012,9564],[2013,10231],[2014,10791],[2015,11351],[2016,8468],[2017,8814],[2018,9168],[2019,9342],[2020,9673],[2021,9631],[2022,9763],[2023,10449],[2024,10814]],"NonfedGov":[[1953,48],[1954,70],[1955,101],[1956,133],[1957,168],[1958,206],[1959,246],[1960,290],[1961,343],[1962,402],[1963,467],[1964,518],[1965,570],[1966,608],[1967,649],[1968,715],[1969,797],[1970,888],[1971,913],[1972,883],[1973,841],[1974,801],[1975,764],[1976,742],[1977,744],[1978,779],[1979,792],[1980,779],[1981,784],[1982,804],[1983,832],[1984,884],[1985,1012],[1986,1168],[1987,1239],[1988,1282],[1989,1339],[1990,1428],[1991,1487],[1992,1501],[1993,1484],[1994,1512],[1995,1598],[1996,1686],[1997,1779],[1998,1843],[1999,1949],[2000,2064],[2001,2172],[2002,2333],[2003,2480],[2004,2546],[2005,2551],[2006,2655],[2007,2837],[2008,3005],[2009,2869],[2010,2641],[2011,2556],[2012,2450],[2013,2420],[2014,2407],[2015,2441],[2016,2657],[2017,2659],[2018,2677],[2019,2741],[2020,2836],[2021,2722],[2022,2753],[2023,2961],[2024,3118]]},"rebuild":{"USDA":[[1954,57.2868],[1955,83.9416],[1956,94.6619],[1957,116.5981],[1958,159.1212],[1959,192.1311],[1960,217.3351],[1961,259.0938],[1962,313.9608],[1963,349.563],[1964,419.4941],[1965,547.6046],[1966,557.27],[1967,574.169],[1968,553.0904],[1969,569.2523],[1970,583.9034],[1971,571.1945],[1972,632.2948],[1973,628.4575],[1974,598.146],[1975,577.9889],[1976,597.0151],[1977,666.1075],[1978,742.1948],[1979,719.4165],[1980,713.5193],[1981,736.4757],[1982,724.6008],[1983,766.4927],[1984,806.546],[1985,878.8501],[1986,833.3906],[1987,843.4659],[1988,882.7965],[1989,856.5025],[1990,879.5955],[1991,915.8458],[1992,956.7722],[1993,961.1096],[1994,928.6684],[1995,891.6801],[1996,806.1504],[1997,839.7951],[1998,866.6488],[1999,1054.5158],[2000,1105.0321],[2001,1210.5467],[2002,1221.9559],[2003,1253.8072],[2004,1159.152],[2005,1168.8344],[2006,1140.5617],[2007,1090.5851],[2008,1018.158],[2009,1035.4538],[2010,1099.0807],[2011,1057.4427],[2012,930.6947],[2013,879.2822],[2014,948.6839],[2015,937.1516],[2016,952.2952],[2017,964.8732],[2018,956.0443],[2019,999.5664],[2020,1103.0774],[2021,1201.5171],[2022,1205.7418],[2023,1298.2491],[2024,1241.734],[2025,1166.3776]],"DOD":[[1954,147.0588],[1955,148.9051],[1956,194.306],[1957,213.3059],[1958,703.7284],[1959,791.4754],[1960,1170.7633],[1961,949.5852],[1962,1123.8155],[1963,1238.4519],[1964,1603.9482],[1965,1596.7253],[1966,1557.27],[1967,1637.4449],[1968,1464.6654],[1969,1469.706],[1970,1605.7343],[1971,1551.7451],[1972,1505.4637],[1973,1345.2918],[1974,1245.3203],[1975,1117.4452],[1976,1136.2546],[1977,1215.9104],[1978,1248.2367],[1979,1320.8959],[1980,1402.8515],[1981,1425.4369],[1982,1509.585],[1983,1651.9239],[1984,1728.3128],[1985,1696.0265],[1986,1776.8517],[1987,1703.801],[1988,1609.8054],[1989,1657.1461],[1990,1606.2179],[1991,1632.5946],[1992,1754.0824],[1993,1984.9002],[1994,1836.6998],[1995,1866.3072],[1996,1675.9442],[1997,1464.258],[1998,1466.6365],[1999,1471.4174],[2000,1697.9762],[2001,2716.3487],[2002,2412.5795],[2003,1800.3386],[2004,1788.406],[2005,1736.554],[2006,1552.4312],[2007,1776.0958],[2008,1851.1964],[2009,1959.9662],[2010,2056.3446],[2011,2050.7979],[2012,2193.7803],[2013,1978.385],[2014,2159.0737],[2015,2197.4588],[2016,2265.8058],[2017,2096.1039],[2018,2336.9971],[2019,2422.0264],[2020,2363.7373],[2021,2596.8273],[2022,2683.7478],[2023,3106.1807],[2024,3746.3221],[2025,2344.1724]],"DOE":[[1954,294.1176],[1955,305.1095],[1956,331.6726],[1957,384.7737],[1958,479.3609],[1959,573.1148],[1960,670.7633],[1961,1066.3689],[1962,1210.3601],[1963,1363.9201],[1964,1465.145],[1965,1565.7975],[1966,1667.0623],[1967,1733.1398],[1968,1567.0895],[1969,1521.4563],[1970,1450.0267],[1971,1332.7872],[1972,1234.4803],[1973,1207.8167],[1974,1108.0409],[1975,1165.611],[1976,1203.6595],[1977,1268.7761],[1978,1338.1997],[1979,1297.3084],[1980,1354.4773],[1981,1377.9223],[1982,1412.9715],[1983,1625.4932],[1984,1699.5076],[1985,1865.6291],[1986,1855.4734],[1987,2007.4487],[1988,2163.7169],[1989,2476.4093],[1990,2543.1784],[1991,2767.447],[1992,2770.6529],[1993,2737.0729],[1994,2455.8121],[1995,2446.9361],[1996,2821.5263],[1997,2842.3833],[1998,2888.8294],[1999,2991.882],[2000,2991.6723],[2001,3100.1806],[2002,3289.8812],[2003,3182.7415],[2004,3378.1002],[2005,3372.9222],[2006,3390.0028],[2007,3489.8725],[2008,3609.833],[2009,4585.5812],[2010,4431.7772],[2011,4325.9019],[2012,4254.6041],[2013,4050.9787],[2014,4220.0078],[2015,4556.4955],[2016,4662.9628],[2017,4491.6511],[2018,4886.4485],[2019,4882.4976],[2020,5200.222],[2021,5038.6201],[2022,5250.811],[2023,5256.6068],[2024,5333.7769],[2025,5300.9225]],"HHS":[[1954,125],[1955,155.2555],[1956,186.4769],[1957,263.3745],[1958,330.2264],[1959,491.1475],[1960,668.1759],[1961,873.0057],[1962,1202.7795],[1963,1475.6554],[1964,1692.7822],[1965,1836.8708],[1966,1937.092],[1967,2817.6812],[1968,2878.1187],[1969,2856.6118],[1970,2588.6383],[1971,2760.7735],[1972,3051.0732],[1973,2936.0748],[1974,3490.819],[1975,3361.9688],[1976,3428.0224],[1977,3637.1582],[1978,3924.636],[1979,4434.4361],[1980,4559.2673],[1981,4478.2474],[1982,4721.9818],[1983,5220.0797],[1984,5732.2374],[1985,6367.8085],[1986,6446.9839],[1987,7220.0677],[1988,7460.4958],[1989,7708.5222],[1990,7878.1164],[1991,8262.5217],[1992,8072.7656],[1993,8879.8167],[1994,8977.1281],[1995,9061.9584],[1996,9546.5177],[1997,9883.7418],[1998,10466.4513],[1999,12139.1934],[2000,13853.3293],[2001,15589.4794],[2002,17013.3854],[2003,18324.8751],[2004,18712.0256],[2005,19436.0465],[2006,18534.1274],[2007,18290.6708],[2008,18203.4314],[2009,21115.8619],[2010,20811.6255],[2011,17559.9573],[2012,17151.373],[2013,16109.7061],[2014,16585.6119],[2015,15446.8429],[2016,15893.4787],[2017,16702.288],[2018,17846.1598],[2019,18338.1997],[2020,20682.7011],[2021,19728.1357],[2022,19214.0788],[2023,18473.7791],[2024,18198.0944],[2025,17469.3575]],"NASA":[[1954,102.9412],[1955,83.9416],[1956,94.6619],[1957,109.7394],[1958,170.4394],[1959,455.6131],[1960,405.3946],[1961,1214.4225],[1962,1238.1554],[1963,1495.9613],[1964,1443.5534],[1965,1657.1801],[1966,1774.4807],[1967,1892.6311],[1968,1782.1802],[1969,2018.2583],[1970,1810.1005],[1971,1570.7849],[1972,1525.5366],[1973,1541.6847],[1974,1255.1259],[1975,1155.9778],[1976,1020.7033],[1977,1342.7881],[1978,1461.8988],[1979,1438.833],[1980,1451.2257],[1981,1247.2572],[1982,1183.5146],[1983,1308.3238],[1984,1541.0789],[1985,1480.1686],[1986,1761.1273],[1987,1906.2328],[1988,2025.239],[1989,2495.0289],[1990,2772.6381],[1991,2787.3567],[1992,2770.6529],[1993,2799.754],[1994,2992.376],[1995,2965.3548],[1996,2906.3843],[1997,3014.6489],[1998,2888.8294],[1999,2869.2639],[2000,3180.3363],[2001,2362.0423],[2002,2631.9049],[2003,2475.4656],[2004,2715.7276],[2005,2771.8073],[2006,2154.3943],[2007,1526.8192],[2008,987.3048],[2009,1146.3953],[2010,886.3554],[2011,929.2678],[2012,2792.084],[2013,2983.2789],[2014,3140.4709],[2015,3296.1882],[2016,3349.4521],[2017,3426.9635],[2018,3222.2233],[2019,5459.1706],[2020,3624.3971],[2021,3837.103],[2022,4317.3335],[2023,3898.3775],[2024,3477.5954],[2025,3432.8843]],"NSF":[[1954,36.7647],[1955,70.8029],[1956,106.7616],[1957,205.7613],[1958,218.3755],[1959,355.4098],[1960,442.4321],[1961,493.2993],[1962,666.4561],[1963,898.8764],[1964,1007.4028],[1965,1037.5985],[1966,1320.4748],[1967,1371.6259],[1968,1403.2109],[1969,1314.4554],[1970,1235.9288],[1971,1313.7474],[1972,1686.1194],[1973,1728.2581],[1974,1706.1868],[1975,1811.0319],[1976,1819.9332],[1977,2030.0418],[1978,2057.9037],[1979,2063.8998],[1980,2104.2772],[1981,2114.398],[1982,2016.8055],[1983,2114.4627],[1984,2304.417],[1985,2482.366],[1986,2452.9988],[1987,2581.0055],[1988,2613.77],[1989,2737.084],[1990,2696.1515],[1991,2747.5373],[1992,2770.6529],[1993,2716.1792],[1994,2847.9165],[1995,2944.6181],[1996,2948.8132],[1997,2971.5825],[1998,3022.16],[1999,3310.6891],[2000,3503.7603],[2001,3838.3188],[2002,4073.1862],[2003,4404.3998],[2004,4437.8963],[2005,4207.8039],[2006,4182.0595],[2007,4206.5427],[2008,4226.8985],[2009,6323.6644],[2010,5211.7699],[2011,5126.9948],[2012,4985.8642],[2013,4584.8286],[2014,4906.9858],[2015,5105.8602],[2016,4925.6649],[2017,4724.5516],[2018,4992.6756],[2019,4997.8322],[2020,5160.8264],[2021,5309.9304],[2022,5017.4416],[2023,5122.9675],[2024,4634.3118],[2025,4362.2915]],"Other":[[1954,90.0147],[1955,101.4453],[1956,460.79],[1957,505.8162],[1958,166.0652],[1959,196.7213],[1960,243.8551],[1961,342.1378],[1962,475.1358],[1963,367.0412],[1964,405.9223],[1965,463.3111],[1966,558.3442],[1967,595.4345],[1968,594.0601],[1969,600.3025],[1970,457.391],[1971,428.3959],[1972,401.457],[1973,432.0645],[1974,402.0325],[1975,452.758],[1976,423.6882],[1977,433.4985],[1978,472.3058],[1979,507.1297],[1980,507.929],[1981,487.0243],[1982,495.1439],[1983,528.6157],[1984,604.9095],[1985,632.1553],[1986,597.5253],[1987,573.5568],[1988,553.9115],[1989,688.9259],[1990,745.744],[1991,816.2973],[1992,837.1757],[1993,814.8538],[1994,598.4752],[1995,580.6289],[1996,509.1476],[1997,516.797],[1998,644.4312],[1999,686.6614],[2000,619.8961],[2001,708.6127],[2002,689.3084],[2003,707.2759],[2004,894.203],[2005,734.6959],[2006,792.0567],[2007,810.149],[2008,956.4515],[2009,850.5514],[2010,957.2639],[2011,961.3115],[2012,930.6947],[2013,785.0734],[2014,817.831],[2015,775.5737],[2016,788.1064],[2017,831.7872],[2018,1168.4986],[2019,1307.1253],[2020,1221.2643],[2021,1046.4826],[2022,1205.7418],[2023,1302.595],[2024,1284.1681],[2025,1207.9613]]},"rebuildTotal":[[1954,853.1838],[1955,949.4015],[1956,1469.331],[1957,1799.369],[1958,2227.3169],[1959,3055.6131],[1960,3818.7193],[1961,5197.9132],[1962,6230.6633],[1963,7189.4694],[1964,8038.248],[1965,8705.0879],[1966,9371.9941],[1967,10632.7592],[1968,10242.4151],[1969,10350.0426],[1970,9731.7231],[1971,9519.9087],[1972,10036.425],[1973,9819.648],[1974,9805.6715],[1975,9633.1485],[1976,9629.2763],[1977,10573.1343],[1978,11245.3755],[1979,11793.7131],[1980,12093.5472],[1981,11878.6404],[1982,12076.6799],[1983,13215.3916],[1984,14402.6065],[1985,15418.4224],[1986,15724.351],[1987,16869.3171],[1988,17309.7351],[1989,18619.6189],[1990,19121.6418],[1991,19909.6908],[1992,19932.7545],[1993,20893.6863],[1994,20637.0761],[1995,20736.7469],[1996,21214.4837],[1997,21533.2065],[1998,22221.7649],[1999,24523.6229],[2000,26952.0025],[2001,29525.5291],[2002,31332.2015],[2003,32148.9038],[2004,33118.6294],[2005,33395.2689],[2006,31682.2691],[2007,31159.5755],[2008,30853.2735],[2009,36980.4938],[2010,35454.2172],[2011,32043.7178],[2012,33239.0949],[2013,31402.9358],[2014,32713.2384],[2015,32315.5709],[2016,32837.7659],[2017,33271.49],[2018,35409.0472],[2019,38444.8631],[2020,39395.6211],[2021,38758.6162],[2022,38894.8964],[2023,38458.7557],[2024,37916.0027],[2025,35283.967]],"performer":{"Intramural":[[1953,38.49],[1954,32.99],[1955,30.82],[1956,29.08],[1957,27.49],[1958,27.75],[1959,24.81],[1960,23.17],[1961,23.66],[1962,20.69],[1963,19.71],[1964,20.02],[1965,19.74],[1966,19.76],[1967,19.04],[1968,20.09],[1969,22.18],[1970,22.47],[1971,22.7],[1972,22.7],[1973,22.9],[1974,22.73],[1975,22.25],[1976,22.41],[1977,22.27],[1978,21.09],[1979,20.01],[1980,19.72],[1981,20.38],[1982,21.37],[1983,22.07],[1984,21.7],[1985,20.7],[1986,19.82],[1987,18.46],[1988,17.49],[1989,17.24],[1990,16.5],[1991,15.56],[1992,15.4],[1993,15.98],[1994,15.19],[1995,15.83],[1996,14.84],[1997,14.26],[1998,14.67],[1999,14.97],[2000,15.5],[2001,16.18],[2002,15.18],[2003,14.2],[2004,13.76],[2005,13.41],[2006,12.97],[2007,12.17],[2008,13.11],[2009,13.86],[2010,12.74],[2011,12.84],[2012,14.35],[2013,14.69],[2014,15.4],[2015,15.82],[2016,15.74],[2017,15.94],[2018,16.12],[2019,16.53],[2020,15.92],[2021,13.95],[2022,14.87],[2023,13.21],[2024,10.23]],"FFRDC":[[1953,13.58],[1954,15.46],[1955,19.5],[1956,22.7],[1957,24.39],[1958,21.42],[1959,20.15],[1960,18.89],[1961,18.21],[1962,15.52],[1963,14.94],[1964,14.47],[1965,13.16],[1966,13.16],[1967,13.2],[1968,13.13],[1969,12.74],[1970,12.16],[1971,11.29],[1972,11.78],[1973,13.42],[1974,14.84],[1975,15.61],[1976,16.58],[1977,17.62],[1978,20.3],[1979,20.87],[1980,21.05],[1981,21.7],[1982,21.11],[1983,21.15],[1984,21.43],[1985,20.58],[1986,20.01],[1987,20.22],[1988,21.77],[1989,21.02],[1990,21.58],[1991,20.91],[1992,21.69],[1993,21.45],[1994,20.94],[1995,19.46],[1996,18.78],[1997,17.68],[1998,16.81],[1999,16.63],[2000,16.62],[2001,14.91],[2002,15.52],[2003,14.79],[2004,14.17],[2005,14.05],[2006,13.95],[2007,13.61],[2008,14.11],[2009,15.05],[2010,16.13],[2011,16.11],[2012,14.46],[2013,11.26],[2014,11.01],[2015,10.86],[2016,10.57],[2017,10.32],[2018,9.89],[2019,10.12],[2020,10.26],[2021,10.55],[2022,10.05],[2023,10.56],[2024,11.11]],"NonfedGov":[[1953,"NA"],[1954,"NA"],[1955,"NA"],[1956,"NA"],[1957,"NA"],[1958,"NA"],[1959,"NA"],[1960,"NA"],[1961,"NA"],[1962,"NA"],[1963,"NA"],[1964,"NA"],[1965,"NA"],[1966,"NA"],[1967,"NA"],[1968,"NA"],[1969,"NA"],[1970,"NA"],[1971,"NA"],[1972,"NA"],[1973,"NA"],[1974,"NA"],[1975,"NA"],[1976,"NA"],[1977,"NA"],[1978,"NA"],[1979,"NA"],[1980,"NA"],[1981,"NA"],[1982,"NA"],[1983,"NA"],[1984,"NA"],[1985,"NA"],[1986,"NA"],[1987,"NA"],[1988,"NA"],[1989,"NA"],[1990,"NA"],[1991,"NA"],[1992,"NA"],[1993,"NA"],[1994,"NA"],[1995,"NA"],[1996,"NA"],[1997,"NA"],[1998,"NA"],[1999,"NA"],[2000,"NA"],[2001,"NA"],[2002,"NA"],[2003,"NA"],[2004,"NA"],[2005,"NA"],[2006,0.04],[2007,0.05],[2008,0.07],[2009,0.08],[2010,0.1],[2011,0.1],[2012,0.1],[2013,0.1],[2014,0.11],[2015,0.11],[2016,0.1],[2017,0.1],[2018,0.11],[2019,0.12],[2020,0.12],[2021,0.11],[2022,0.1],[2023,0.1],[2024,0.11]],"Business":[[1953,7.17],[1954,7.9],[1955,2.2],[1956,1.79],[1957,0.89],[1958,2.61],[1959,5.11],[1960,4.53],[1961,3.09],[1962,8.54],[1963,7.54],[1964,7.27],[1965,8.26],[1966,6.84],[1967,7.37],[1968,6.04],[1969,5.01],[1970,4.88],[1971,3.95],[1972,3.43],[1973,3.37],[1974,3.62],[1975,3.05],[1976,3.06],[1977,3.19],[1978,3.15],[1979,2.9],[1980,2.77],[1981,2.49],[1982,3.55],[1983,4.41],[1984,3.93],[1985,3.81],[1986,4.25],[1987,5.39],[1988,5.42],[1989,7.36],[1990,6.18],[1991,8.19],[1992,4.53],[1993,2.84],[1994,2.6],[1995,1.12],[1996,3.6],[1997,5.34],[1998,4.89],[1999,4.95],[2000,3.81],[2001,2.86],[2002,2.99],[2003,4.22],[2004,3.14],[2005,3.12],[2006,3.97],[2007,7.32],[2008,3.9],[2009,3.41],[2010,3.5],[2011,1.72],[2012,1.68],[2013,3.3],[2014,5.52],[2015,5.47],[2016,5.24],[2017,4.72],[2018,5.99],[2019,5.28],[2020,4.79],[2021,5.07],[2022,4.69],[2023,3.76],[2024,3.97]],"HigherEd":[[1953,30.94],[1954,33.33],[1955,36.79],[1956,36.48],[1957,37.03],[1958,37.62],[1959,39.55],[1960,42.95],[1961,44.44],[1962,44.83],[1963,47.65],[1964,48.67],[1965,49.68],[1966,51.37],[1967,52.11],[1968,52.73],[1969,52.42],[1970,52.9],[1971,54.12],[1972,54.1],[1973,52.3],[1974,51.14],[1975,51.77],[1976,50.73],[1977,49.92],[1978,48.46],[1979,48.92],[1980,49.8],[1981,50.54],[1982,48.8],[1983,46.98],[1984,47.24],[1985,48.96],[1986,50.12],[1987,49.84],[1988,49.08],[1989,47.95],[1990,49.01],[1991,48.57],[1992,51.29],[1993,52.67],[1994,54.5],[1995,56.7],[1996,55.87],[1997,55.87],[1998,56.5],[1999,55.7],[2000,55.44],[2001,56.68],[2002,57.66],[2003,58.52],[2004,60.75],[2005,61.26],[2006,61.24],[2007,59.39],[2008,60.69],[2009,58.68],[2010,59.02],[2011,61.38],[2012,61.31],[2013,62.3],[2014,59.62],[2015,59.59],[2016,58.1],[2017,59.43],[2018,57.8],[2019,57.25],[2020,57.66],[2021,60.51],[2022,59.78],[2023,61.28],[2024,63.3]],"Nonprofit":[[1953,10.19],[1954,10.65],[1955,11.01],[1956,10.46],[1957,10.64],[1958,10.8],[1959,10.68],[1960,10.58],[1961,10.7],[1962,10.51],[1963,10.17],[1964,9.63],[1965,9.21],[1966,8.87],[1967,8.33],[1968,8],[1969,7.65],[1970,7.64],[1971,7.97],[1972,8.02],[1973,8.04],[1974,7.69],[1975,7.35],[1976,7.22],[1977,7.01],[1978,6.99],[1979,7.3],[1980,6.69],[1981,4.92],[1982,5.18],[1983,5.42],[1984,5.71],[1985,5.95],[1986,5.81],[1987,6.09],[1988,6.25],[1989,6.42],[1990,6.74],[1991,6.78],[1992,7.09],[1993,7.06],[1994,6.78],[1995,6.89],[1996,6.91],[1997,6.84],[1998,7.14],[1999,7.75],[2000,8.64],[2001,9.36],[2002,8.66],[2003,8.26],[2004,8.17],[2005,8.16],[2006,7.83],[2007,7.45],[2008,8.13],[2009,8.91],[2010,8.51],[2011,7.84],[2012,8.09],[2013,8.35],[2014,8.34],[2015,8.15],[2016,10.26],[2017,9.49],[2018,10.09],[2019,10.7],[2020,11.25],[2021,9.8],[2022,10.51],[2023,11.08],[2024,11.28]]},"agyears":[1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"agconst":{"NIH":[[1975,2203.2006],[1976,2289.492],[1977,2170.6684],[1978,3514.7461],[1979,4115.3305],[1980,4253.5576],[1981,4165.8812],[1982,4304.913],[1983,5224.8258],[1984,5732.6269],[1985,6395.1883],[1986,6410.8004],[1987,7281.645],[1988,7467.5681],[1989,7749.9122],[1990,7893.9343],[1991,8213.6431],[1992,8734.4398],[1993,8900.6705],[1994,8983.6716],[1995,9066.049],[1996,9377.9979],[1997,9873.8118],[1998,10467.9362],[1999,12136.027],[2000,13906.1465],[2001,15649.5628],[2002,17148.6877],[2003,18391.0686],[2004,18818.4418],[2005,19469.9025],[2006,18506.8151],[2007,18134.3629],[2008,18073.4167],[2009,17730.5916],[2010,17977.1732],[2011,17501.0931],[2012,17072.3803],[2013,16058.5788],[2014,16346.5959],[2015,15311.1727],[2016,15754.2589],[2017,16625],[2018,17755.819],[2019,18243.8255],[2020,20609.652],[2021,19243.813],[2022,18631.8855],[2023,18723.6831],[2024,18139.3122],[2025,17505.4653],[2026,17676.3519]],"DOE":[[1975,919.2408],[1976,1210.8559],[1977,1265.4121],[1978,1726.9687],[1979,1738.3966],[1980,1767.141],[1981,1406.6918],[1982,1716.2371],[1983,1610.7241],[1984,1724.0677],[1985,1678.17],[1986,1853.4233],[1987,1999.6227],[1988,2139.5944],[1989,2428.3456],[1990,2558.7936],[1991,2756.4207],[1992,2733.8015],[1993,2696.0861],[1994,2446.2078],[1995,2422.2953],[1996,2813.1417],[1997,2944.2283],[1998,2980.3587],[1999,3128.0754],[2000,3116.6506],[2001,3213.6614],[2002,3415.4091],[2003,3319.8337],[2004,3451.0473],[2005,3527.4948],[2006,3491.9521],[2007,3634.7727],[2008,3932.5077],[2009,4268.3613],[2010,4427.9661],[2011,4349.5846],[2012,4200.1288],[2013,4060.9438],[2014,4236.2666],[2015,4588.5793],[2016,4683.0181],[2017,4556.319],[2018,4895.2348],[2019,4942.1593],[2020,5228.7902],[2021,5098.9918],[2022,5553.8422],[2023,5410.8299],[2024,5340.3016],[2025,4601.1553],[2026,5415.5106]],"NSF":[[1975,1808.7086],[1976,1882.3939],[1977,2027.904],[1978,2061.4168],[1979,2061.8847],[1980,2147.4774],[1981,2071.1593],[1982,2011.4563],[1983,2096.2635],[1984,2306.9085],[1985,2488.661],[1986,2422.3722],[1987,2608.9417],[1988,2600.0365],[1989,2744.8191],[1990,2658.7597],[1991,2862.7515],[1992,2781.6789],[1993,2721.0354],[1994,2849.0768],[1995,2894.5009],[1996,2920.2112],[1997,2962.963],[1998,3010.2477],[1999,3263.0395],[2000,3498.1408],[2001,3834.8797],[2002,4072.0148],[2003,4418.0362],[2004,4456.594],[2005,4191.6957],[2006,4161.2411],[2007,4205.0135],[2008,4221.7021],[2009,4483.9714],[2010,5115.1811],[2011,5078.6864],[2012,4995.0397],[2013,4599.5993],[2014,4893.5481],[2015,5098.2985],[2016,4910.8196],[2017,4739.05],[2018,4978.6441],[2019,5006.3298],[2020,5173.6323],[2021,5475.7104],[2022,4839.3729],[2023,5028.2625],[2024,4469.7997],[2025,4376.9519],[2026,4049.6462]],"NASA":[[1975,900.6327],[1976,1019.485],[1977,1343.2836],[1978,1711.7665],[1979,1867.7918],[1980,1981.8887],[1981,1253.5344],[1982,1180.8768],[1983,1302.5121],[1984,1538.6183],[1985,1480.9702],[1986,1772.4204],[1987,2024.1464],[1988,2084.7798],[1989,2431.5068],[1990,2763.1311],[1991,2821.8551],[1992,2815.1931],[1993,2841.104],[1994,3071.8755],[1995,2940.8249],[1996,3083.0155],[1997,2955.7573],[1998,2865.0726],[1999,2785.0415],[2000,2958.2702],[2001,2279.1448],[2002,2531.1093],[2003,2865.941],[2004,3136.1189],[2005,3058.5459],[2006,2739.8403],[2007,2688.8773],[2008,2479.958],[2009,1012.2596],[2010,931.0883],[2011,1308.4827],[2012,3415.2888],[2013,3110.619],[2014,3437.966],[2015,3290.2829],[2016,3638.7025],[2017,3606.4],[2018,3210.135],[2019,4752.6655],[2020,6309.8511],[2021,4129.2392],[2022,4898.4837],[2023,4609.6502],[2024,3466.0496],[2025,3446.2836],[2026,3632.2343]],"DOD":[[1975,878.3029],[1976,869.8678],[1977,940.9474],[1978,972.9401],[1979,1026.7229],[1980,1428.2018],[1981,1449.1046],[1982,1535.5805],[1983,1661.3891],[1984,1717.9539],[1985,1678.17],[1986,1839.9229],[1987,1686.4743],[1988,1638.9549],[1989,1670.1791],[1990,1578.0058],[1991,1889.4831],[1992,1819.6792],[1993,2045.7898],[1994,1798.9974],[1995,1755.5574],[1996,1611.9097],[1997,1487.246],[1998,1440.2718],[1999,1495.2777],[2000,1564.5228],[2001,1731.0233],[2002,1787.1326],[2003,1777.6426],[2004,1721.8055],[2005,1826.7503],[2006,1736.7239],[2007,1768.3925],[2008,1807.3174],[2009,1965.7617],[2010,2023.5169],[2011,2051.6266],[2012,2158.2027],[2013,2005.0322],[2014,2178.5501],[2015,2268.8581],[2016,2267.9723],[2017,2204.132],[2018,2220.6466],[2019,2382.7221],[2020,2414.7322],[2021,2328.5151],[2022,2297.7204],[2023,2435.4387],[2024,2111.7546],[2025,1948.5133],[2026,1862.7985]],"USDA":[[1975,573.1299],[1976,612.3869],[1977,632.706],[1978,693.2198],[1979,717.2996],[1980,724.4502],[1981,751.6494],[1982,735.8449],[1983,770.5299],[1984,802.9346],[1985,887.3989],[1986,835.1013],[1987,845.1236],[1988,875.2056],[1989,858.6231],[1990,875.9742],[1991,904.6295],[1992,952.7609],[1993,969.9049],[1994,915.6112],[1995,896.5929],[1996,853.6228],[1997,838.7376],[1998,863.934],[1999,891.3257],[2000,942.019],[2001,1077.0472],[2002,1055.0702],[2003,1130.6949],[2004,1051.6774],[2005,1031.1308],[2006,1016.5296],[2007,1033.4029],[2008,994.2052],[2009,1020.1327],[2010,1105.0401],[2011,1019.8951],[2012,995.2759],[2013,875.2504],[2014,1027.3405],[2015,1017.8352],[2016,1048.4035],[2017,1119],[2018,1061.4361],[2019,1165.1138],[2020,1005.9733],[2021,1522.4565],[2022,1254.1763],[2023,1145.2445],[2024,1107.4763],[2025,1109.4628],[2026,1151.0756]],"Other":[[1975,703.3867],[1976,706.3326],[1977,1002.5957],[1978,1425.9653],[1979,1108.2982],[1980,913.3247],[1981,935.4383],[1982,500.1102],[1983,512.9829],[1984,573.6703],[1985,763.9519],[1986,605.5931],[1987,558.3852],[1988,562.7627],[1989,764.1377],[1990,781.3639],[1991,847.3074],[1992,818.3674],[1993,789.0769],[1994,830.3327],[1995,603.9764],[1996,522.7646],[1997,498.1961],[1998,465.9294],[1999,809.6118],[2000,828.8101],[2001,957.0626],[2002,1560.7412],[2003,988.6141],[2004,1000.2878],[2005,951.5385],[2006,924.8266],[2007,1202.1969],[2008,1146.0731],[2009,1192.4283],[2010,1110.6353],[2011,1266.773],[2012,1312.0721],[2013,1139.0541],[2014,1109.2751],[2015,1131.8553],[2016,1165.4035],[2017,1220.434],[2018,1299.7906],[2019,1305.4442],[2020,1289.4444],[2021,1273.1439],[2022,1279.8766],[2023,1321.373],[2024,1223.9687],[2025,1193.7851],[2026,1024.5908]]},"ppp":{"USA":[[1990,23029],[1991,27140],[1992,27604],[1993,28743],[1994,29651],[1995,29610],[1996,32799],[1997,36717],[1998,34842],[1999,38282],[2000,42033],[2001,46363],[2002,50400],[2003,54823],[2004,56379],[2005,59899],[2006,61552],[2007,66488],[2008,70468],[2009,74383],[2010,76435],[2011,73669],[2012,73971],[2013,79214],[2014,82841],[2015,84955],[2016,88048],[2017,90552],[2018,98366],[2019,105350],[2020,112177],[2021,120417],[2022,130914],[2023,138760],[2024,145483]],"CHN":[[1991,428.1],[1992,485.8],[1993,575],[1994,692.5],[1995,664.9],[1996,712.5],[1997,966.6],[1998,1039.8],[1999,1250.1],[2000,1726.1],[2001,2054.4],[2002,2751.6],[2003,3247.1],[2004,4166],[2005,4637.3],[2006,5455.3],[2007,5817.6],[2008,6956.4],[2009,8574.3],[2010,9743.8],[2011,11684.4],[2012,14089.5],[2013,15325.1],[2014,16610.5],[2015,18937.5],[2016,21239.8],[2017,24145.5],[2018,26632.8],[2019,32899],[2020,36541],[2021,45569.1],[2022,53332.6],[2023,62000],[2024,70797.1]],"JPN":[[1991,9075.6],[1992,9604.2],[1993,10154.5],[1994,10392.5],[1995,11715.2],[1996,10103.8],[1997,10518.7],[1998,10969.7],[1999,11365.4],[2000,12247.1],[2001,12644.5],[2002,13678.4],[2003,14171.4],[2004,14063.2],[2005,15443.2],[2006,16157.6],[2007,17045.8],[2008,16932.1],[2009,17104.2],[2010,17044.3],[2011,18192.5],[2012,18978.1],[2013,20788.4],[2014,20782],[2015,20072.9],[2016,20148.3],[2017,21850.6],[2018,21632],[2019,21734.9],[2020,21493.2],[2021,23122.3],[2022,24003.9],[2023,25652.7],[2024,27153.2]],"KOR":[[1995,1633.7],[1996,1956.4],[1997,2152.4],[1998,2042.8],[1999,2153.3],[2000,2336.7],[2001,2676.2],[2002,3083],[2003,3488.1],[2004,4274.6],[2005,4698.6],[2006,5368.7],[2007,6385.8],[2008,7047.2],[2009,8270],[2010,9507.5],[2011,10546.9],[2012,11876.8],[2013,12272.5],[2014,12894.7],[2015,13250],[2016,12909.3],[2017,13053.8],[2018,14248.3],[2019,15411.9],[2020,16215],[2021,18195.9],[2022,20882.8],[2023,21873.4],[2024,23810.4]],"FRA":[[1990,4702.1],[1991,4964.2],[1992,5302.5],[1993,5712.9],[1994,5982.1],[1995,6154.7],[1996,6234.9],[1997,6305.5],[1998,7386.6],[1999,7567.2],[2000,7854.6],[2001,8407.9],[2002,8975.2],[2003,8951.6],[2004,9068.4],[2005,9466.4],[2006,10120.8],[2007,11012.4],[2008,11802.6],[2009,12953.6],[2010,12767],[2011,13047.8],[2012,13288.8],[2013,14188.9],[2014,14480.2],[2015,14647.6],[2016,14196.2],[2017,14947.6],[2018,15540.3],[2019,17158.3],[2020,17266.2],[2021,18127.6],[2022,17651],[2023,18664.6]]},"sankey":[{"Agency":"DOD","Field":"Computer Sci & Math","Value":2.2381},{"Agency":"DOD","Field":"Engineering","Value":0.8892},{"Agency":"DOD","Field":"Environmental/Geo","Value":0.1671},{"Agency":"DOD","Field":"Life Sciences","Value":0.2226},{"Agency":"DOD","Field":"Other Fields","Value":0.8092},{"Agency":"DOD","Field":"Physical Sciences","Value":0.2587},{"Agency":"DOD","Field":"Psychology","Value":0.0372},{"Agency":"DOD","Field":"Social Sciences","Value":0.0213},{"Agency":"NASA","Field":"Engineering","Value":0.0419},{"Agency":"NASA","Field":"Environmental/Geo","Value":1.5513},{"Agency":"NASA","Field":"Life Sciences","Value":0.0328},{"Agency":"NASA","Field":"Other Fields","Value":0.0409},{"Agency":"NASA","Field":"Physical Sciences","Value":2.6891},{"Agency":"NIH","Field":"Computer Sci & Math","Value":0.1976},{"Agency":"NIH","Field":"Engineering","Value":1.9956},{"Agency":"NIH","Field":"Environmental/Geo","Value":0.4392},{"Agency":"NIH","Field":"Life Sciences","Value":13.7383},{"Agency":"NIH","Field":"Other Fields","Value":1.9444},{"Agency":"NIH","Field":"Physical Sciences","Value":0.7284},{"Agency":"NIH","Field":"Psychology","Value":2.5922},{"Agency":"NIH","Field":"Social Sciences","Value":1.0204},{"Agency":"NSF","Field":"Computer Sci & Math","Value":0.9802},{"Agency":"NSF","Field":"Engineering","Value":0.6673},{"Agency":"NSF","Field":"Environmental/Geo","Value":0.9528},{"Agency":"NSF","Field":"Life Sciences","Value":0.7239},{"Agency":"NSF","Field":"Other Fields","Value":1.0617},{"Agency":"NSF","Field":"Physical Sciences","Value":1.2132},{"Agency":"NSF","Field":"Psychology","Value":0.031},{"Agency":"NSF","Field":"Social Sciences","Value":0.1749},{"Agency":"Other","Field":"Computer Sci & Math","Value":1.0284},{"Agency":"Other","Field":"Engineering","Value":0.2515},{"Agency":"Other","Field":"Environmental/Geo","Value":0.3673},{"Agency":"Other","Field":"Life Sciences","Value":1.6332},{"Agency":"Other","Field":"Other Fields","Value":0.653},{"Agency":"Other","Field":"Physical Sciences","Value":4.4797},{"Agency":"Other","Field":"Psychology","Value":0.0004},{"Agency":"Other","Field":"Social Sciences","Value":0.0642},{"Agency":"USDA","Field":"Computer Sci & Math","Value":0.0339},{"Agency":"USDA","Field":"Engineering","Value":0.0833},{"Agency":"USDA","Field":"Environmental/Geo","Value":0.0163},{"Agency":"USDA","Field":"Life Sciences","Value":1.2554},{"Agency":"USDA","Field":"Other Fields","Value":0.0383},{"Agency":"USDA","Field":"Physical Sciences","Value":0.0779},{"Agency":"USDA","Field":"Psychology","Value":0.0002},{"Agency":"USDA","Field":"Social Sciences","Value":0.0501}],"rdtype":{"Basic":[[1975,7986.6022],[1976,8590.8142],[1977,9383.5172],[1978,12107.0234],[1979,12635.7243],[1980,13216.0414],[1981,12033.459],[1982,11985.0187],[1983,13179.2274],[1984,14396.7801],[1985,15372.5104],[1986,15739.6336],[1987,17004.3388],[1988,17368.9019],[1989,18647.5237],[1990,19109.9627],[1991,20296.0903],[1992,20655.9208],[1993,20963.6676],[1994,20895.7729],[1995,20579.7968],[1996,21182.6634],[1997,21560.94],[1998,22093.7504],[1999,24508.3985],[2000,26814.56],[2001,28742.3818],[2002,31570.1649],[2003,32891.8311],[2004,33635.9728],[2005,34057.0585],[2006,32577.9287],[2007,32667.0187],[2008,32655.18],[2009,40941.3055],[2010,32690.6011],[2011,32576.1415],[2012,34148.3884],[2013,31849.0776],[2014,33229.5423],[2015,32706.882],[2016,33468.5784],[2017,34070.335],[2018,35421.7063],[2019,37798.2603],[2020,42032.0755],[2021,39071.8698],[2022,38755.3577],[2023,38674.4819],[2024,35858.6627],[2025,34181.6174],[2026,34812.2079]],"Applied":[[1975,17058.8314],[1976,17920.4315],[1977,18241.7748],[1978,17101.727],[1979,16998.6076],[1980,16790.1113],[1981,16743.1197],[1982,16704.5274],[1983,16910.4919],[1984,16128.5918],[1985,16442.5163],[1986,16087.1745],[1987,16839.2756],[1988,16707.6558],[1989,17821.5666],[1990,17525.754],[1991,18912.8088],[1992,18428.9818],[1993,20967.5659],[1994,20934.2286],[1995,21344.5908],[1996,20734.1859],[1997,20788.1017],[1998,22003.887],[1999,22483.0256],[2000,26105.1481],[2001,30187.2942],[2002,32309.8986],[2003,35674.8901],[2004,36512.0837],[2005,35501.7916],[2006,33737.7965],[2007,33169.3325],[2008,31932.6668],[2009,40014.6215],[2010,35455.067],[2011,35445.6186],[2012,35780.9523],[2013,34764.432],[2014,36028.5742],[2015,37003.6985],[2016,37672.3612],[2017,40631.8429],[2018,42481.9181],[2019,43888.6333],[2020,44314.5208],[2021,40929.8453],[2022,41113.4233],[2023,40898.5746],[2024,42737.2034],[2025,40121.5437],[2026,35366.3179]],"Developmental":[[1975,45809.8623],[1976,45790.9743],[1977,48462.8877],[1978,49371.7817],[1979,49536.2504],[1980,47174.784],[1981,49225.1272],[1982,51576.1269],[1983,51631.8345],[1984,55524.9643],[1985,63549.7929],[1986,67329.2189],[1987,70388.9832],[1988,69649.7351],[1989,71375.1317],[1990,71055.7438],[1991,61061.3447],[1992,65595.2761],[1993,63033.6816],[1994,60772.4706],[1995,60818.8882],[1996,59548.2546],[1997,61014.5554],[1998,60631.9385],[1999,124619.7104],[2000,55417.9865],[2001,57437.1386],[2002,64965.5811],[2003,76642.4211],[2004,83348.3352],[2005,85685.4083],[2006,89452.1583],[2007,93731.2317],[2008,94047.89],[2009,93838.7173],[2010,92675.9679],[2011,86564.4423],[2012,81342.1882],[2013,70866.769],[2014,68836.308],[2015,69206.6984],[2016,76320.491],[2017,49253.816],[2018,58906.6014],[2019,57544.3468],[2020,68396.2276],[2021,65451.0356],[2022,72276.1518],[2023,77124.4628],[2024,72162.0841],[2025,74214.9001],[2026,75687.1363]]},"compare":[{"Field":"Life Sciences","Label":"Life sciences","Federal":38.7719,"Business":43.7854},{"Field":"Physical Sciences","Label":"Physical sciences","Federal":20.1368,"Business":4.0086},{"Field":"Other","Label":"Other fields","Federal":15.3509,"Business":10.6362},{"Field":"Engineering","Label":"Engineering","Federal":9.1784,"Business":23.5259},{"Field":"Environmental/Geosciences","Label":"Environmental/geo","Federal":7.7332,"Business":0.8505},{"Field":"Computer Sci & Mathematics","Label":"Computer sci & math","Federal":6.3658,"Business":17.1908},{"Field":"Social Sciences","Label":"Social sciences","Federal":2.4631,"Business":0.0027}],"overlap":69.8,"pbr":[{"Agency":"DOD","Prior":2495.7,"Request":2121.1,"Enacted":2435.4},{"Agency":"HHS / NIH","Prior":22421,"Request":14158,"Enacted":23110.1},{"Agency":"DOE","Prior":5893.2,"Request":5816,"Enacted":7080.2},{"Agency":"NASA","Prior":4414,"Request":2564,"Enacted":4748.8},{"Agency":"NSF","Prior":5606,"Request":2417,"Enacted":5294.5},{"Agency":"USDA","Prior":1421,"Request":1069,"Enacted":1504.9},{"Agency":"All others","Prior":1529,"Request":1388,"Enacted":1339.5}],"pbrTotals":{"Prior":43779.9,"Request":29533.1,"Enacted":45513.4}};
+
+/* The definitions page is baked into this file, so the piece travels as a
+   single HTML document. The link opens it in a new tab from an in-memory
+   blob; if that is blocked, it falls back to definitions.html on disk. */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href="definitions.html"]');
+  if (!a || !DEFINITIONS_DOC) return;
+  e.preventDefault();
+  try {
+    const url = URL.createObjectURL(new Blob([DEFINITIONS_DOC], {type:'text/html'}));
+    const w = window.open(url, '_blank');
+    if (!w) { window.location.href = 'definitions.html'; return; }
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } catch (err) {
+    window.location.href = 'definitions.html';
+  }
+});
+
+const P = {
+  navy:'#00205B', blue:'#001489', lightblue:'#69A9E3', paleblue:'#D4E3FF',
+  teal:'#045258', sage:'#AAC09C', gray:'#63666A', grayL:'#D9D9D9', grayXL:'#E8E8E8'
+};
+const W = 1000, H = 400, M = {t:16, r:120, b:34, l:70};
+const IW = W - M.l - M.r, IH = H - M.t - M.b;
+
+const el = (n, a) => {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', n);
+  for (const k in a) e.setAttribute(k, a[k]);
+  return e;
+};
+const scale = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+const pathOf = (pts, x, y) =>
+  pts.map((p, i) => (i ? 'L' : 'M') + x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1)).join(' ');
+
+function frame(mount, xd, yd, yfmt, xticks, yticks) {
+  const svg = el('svg', {viewBox:`0 0 ${W} ${H}`, role:'img'});
+  mount.appendChild(svg);
+  const x = scale(xd[0], xd[1], M.l, M.l + IW);
+  const y = scale(yd[0], yd[1], M.t + IH, M.t);
+  const ax = el('g', {class:'axis'});
+  svg.appendChild(ax);
+  yticks.forEach(t => {
+    ax.appendChild(el('line', {class:'gridline', x1:M.l, x2:M.l+IW, y1:y(t), y2:y(t)}));
+    const lb = el('text', {x:M.l-10, y:y(t)+3.5, 'text-anchor':'end'});
+    lb.textContent = yfmt(t);
+    ax.appendChild(lb);
+  });
+  ax.appendChild(el('line', {x1:M.l, x2:M.l+IW, y1:M.t+IH, y2:M.t+IH}));
+  xticks.forEach(t => {
+    const lb = el('text', {x:x(t), y:M.t+IH+18, 'text-anchor':'middle'});
+    lb.textContent = t;
+    ax.appendChild(lb);
+  });
+  return {svg, x, y};
+}
+
+/* ---- 3. animated line ---- */
+const C1 = (() => {
+  const f = frame(document.getElementById('c1'), [1953, 2024], [0, 50000],
+    v => '$' + (v/1000) + 'B', [1953,1965,1975,1985,1995,2005,2015,2024],
+    [0,10000,20000,30000,40000,50000]);
+  const {svg, x, y} = f;
+  const pts = DATA.fedc;
+
+  const glow = el('path', {class:'series', d:pathOf(pts, x, y),
+    stroke:P.lightblue, 'stroke-width':9, opacity:.15});
+  const line = el('path', {class:'series', d:pathOf(pts, x, y),
+    stroke:P.lightblue, 'stroke-width':3});
+  svg.appendChild(glow); svg.appendChild(line);
+
+  const head = el('circle', {r:5.5, fill:'#fff', stroke:P.navy, 'stroke-width':2, opacity:0});
+  svg.appendChild(head);
+
+  const labEl = document.getElementById('r1-lab');
+  const valEl = document.getElementById('r1-val');
+
+  let total = 2000;
+  try { total = line.getTotalLength(); } catch (e) {}
+  [glow, line].forEach(p => {
+    p.setAttribute('stroke-dasharray', total);
+    p.setAttribute('stroke-dashoffset', total);
+  });
+
+  let played = false;
+  function play() {
+    if (played) return;
+    played = true;
+    const DUR = 2600, t0 = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 2.2);
+    function tick(now) {
+      const raw = Math.min(1, (now - t0) / DUR), e = ease(raw);
+      [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', total * (1 - e)));
+      const i = Math.min(pts.length - 1, Math.round(e * (pts.length - 1)));
+      head.setAttribute('cx', x(pts[i][0]));
+      head.setAttribute('cy', y(pts[i][1]));
+      head.setAttribute('opacity', 1);
+      labEl.textContent = pts[i][0];
+      valEl.textContent = '$' + (pts[i][1]/1000).toFixed(1) + 'B';
+      if (raw < 1) requestAnimationFrame(tick);
+      else {
+        head.setAttribute('opacity', 0);
+        labEl.textContent = '1953 \u2192 2024';
+        valEl.textContent = '$2.0B \u2192 $46.1B';
+        const ij = document.getElementById('interject');
+        if (ij) ij.classList.add('is-on');
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', 0));
+    labEl.textContent = '1953 \u2192 2024';
+    valEl.textContent = '$2.0B \u2192 $46.1B';
+    const ij0 = document.getElementById('interject');
+    if (ij0) ij0.classList.add('is-on');
+  }
+  play.reset = () => {
+    played = false;
+    [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', total));
+    head.setAttribute('opacity', 0);
+    labEl.textContent = '1953';
+    valEl.textContent = '$2.0B';
+    const ij = document.getElementById('interject');
+    if (ij) ij.classList.remove('is-on');
+  };
+  return play;
+})();
+
+/* ---- 5. animated stack ---- */
+const C2 = (() => {
+  const yrs = DATA.rebuildTotal.map(p => p[0]);
+  const f = frame(document.getElementById('c2'), [yrs[0], yrs[yrs.length-1]], [0, 45000],
+    v => '$' + (v/1000) + 'B',
+    [1954,1960,1965,1970,1975,1980,1985,1990,1995,2000,2005,2010,2015,2020,2025],
+    [0,10000,20000,30000,40000]);
+  const {svg, x, y} = f;
+
+  /* PIPS agency palette, exactly as used in the R chart and the dashboard */
+  /* dark-theme mapping of the PIPS agency palette: blues stay blue, DOD stays
+     green, USDA keeps its exact dashboard hex. NASA takes a gold so the thin
+     bands at the bottom stay separable against navy. */
+  const pipsAgency = {USDA:'#AAC09C', Other:'#7C838C', DOD:'#2E7D6B',
+                      NASA:'#C9A227', NSF:'#35619C', DOE:'#69A9E3', HHS:'#C3DAF5'};
+  const shown = {USDA:'USDA', Other:'Other', DOD:'DOD', NASA:'NASA',
+                 NSF:'NSF', DOE:'DOE', HHS:'HHS/NIH'};
+  /* bottom to top: smallest at the bottom, HHS on top */
+  const order = ['USDA','Other','DOD','NASA','NSF','DOE','HHS'];
+
+  const clipId = 'wipe2';
+  const defs = el('defs', {});
+  const cp = el('clipPath', {id:clipId});
+  const cr = el('rect', {x:M.l, y:0, width:0, height:H});
+  cp.appendChild(cr); defs.appendChild(cp); svg.appendChild(defs);
+  const g = el('g', {'clip-path':`url(#${clipId})`});
+  svg.appendChild(g);
+
+  const base = {}; yrs.forEach(yr => base[yr] = 0);
+  const labels = [];
+
+  order.forEach(ag => {
+    const pts = DATA.rebuild[ag];
+    const top = [], bot = [];
+    pts.forEach(([yr, v]) => {
+      bot.push([yr, base[yr]]);
+      base[yr] += v;
+      top.push([yr, base[yr]]);
+    });
+    const dstr = pathOf(top, x, y) + ' ' +
+      bot.slice().reverse().map(p => 'L' + x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1)).join(' ') + ' Z';
+    g.appendChild(el('path', {d:dstr, fill:pipsAgency[ag], opacity:1,
+      stroke:P.navy, 'stroke-width':.8}));
+    const mid = top[top.length-1][1] - pts[pts.length-1][1]/2;
+    const lb = el('text', {class:'endlabel', x:M.l+IW+9, y:y(mid)+3.5,
+      fill:'#fff', 'font-weight': ag === 'HHS' ? 600 : 400, opacity:0});
+    lb.textContent = shown[ag];
+    lb.style.transition = 'opacity .5s ease';
+    svg.appendChild(lb);
+    labels.push({el:lb, y:y(mid)+3.5});
+  });
+
+  /* nudge labels apart where the thin bands crowd at the bottom */
+  labels.sort((a, b) => a.y - b.y);
+  const MINGAP = 15;
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].y - labels[i-1].y < MINGAP) labels[i].y = labels[i-1].y + MINGAP;
+  }
+  const overflow = labels[labels.length-1].y - (M.t + IH);
+  if (overflow > 0) labels.forEach(l => l.y -= overflow);
+  labels.forEach(l => l.el.setAttribute('y', l.y.toFixed(1)));
+
+
+  const valEl = document.getElementById('r2-val');
+  let played = false;
+  function play() {
+    if (played) return;
+    played = true;
+    const DUR = 2400, t0 = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 2);
+    function tick(now) {
+      const raw = Math.min(1, (now - t0) / DUR), e = ease(raw);
+      cr.setAttribute('width', IW * e);
+      valEl.textContent = '15% in 1954  \u2192  ' + Math.round(15 + 35 * e) + '% in 2025';
+      if (raw < 1) requestAnimationFrame(tick);
+      else {
+        valEl.textContent = '15% in 1954  \u2192  50% in 2025';
+        labels.forEach(l => l.el.style.opacity = 1);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    cr.setAttribute('width', IW);
+    valEl.textContent = '15% in 1954  \u2192  50% in 2025';
+    labels.forEach(l => l.el.style.opacity = 1);
+  }
+  play.reset = () => {
+    played = false;
+    cr.setAttribute('width', 0);
+    valEl.textContent = '15% in 1954';
+    labels.forEach(l => l.el.style.opacity = 0);
+  };
+  return play;
+})();
+
+/* ---- 7. funder stack, drawn in sequence ---- */
+const C5 = (() => {
+  const f = frame(document.getElementById('c5'), [1953, 2024], [0, 120000],
+    v => '$' + (v/1000) + 'B', [1953,1965,1975,1985,1995,2005,2015,2024],
+    [0,30000,60000,90000,120000]);
+  const {svg, x, y} = f;
+
+  const order = ['Federal','Business','Other'];
+  const fills = {Federal:P.lightblue, Business:P.sage, Other:P.gray};
+  const shownAs = {Federal:'Federal', Business:'Business', Other:'Other'};
+  const yrs = DATA.funders.Federal.map(p => p[0]);
+  const merged = {
+    Federal: DATA.funders.Federal,
+    Business: DATA.funders.Business,
+    Other: yrs.map((yr, i) => [yr,
+      DATA.funders.HigherEd[i][1] + DATA.funders.Nonprofit[i][1] + DATA.funders.NonfedGov[i][1]])
+  };
+  const base = {}; yrs.forEach(yr => base[yr] = 0);
+  const bands = [];
+
+  order.forEach((k, idx) => {
+    const pts = merged[k], top = [], bot = [];
+    pts.forEach(([yr, v]) => {
+      bot.push([yr, base[yr]]);
+      base[yr] += v;
+      top.push([yr, base[yr]]);
+    });
+    const dstr = pathOf(top, x, y) + ' ' +
+      bot.slice().reverse().map(p => 'L' + x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1)).join(' ') + ' Z';
+
+    const cid = 'wipe3-' + idx;
+    const defs = el('defs', {});
+    const cp = el('clipPath', {id:cid});
+    const cr = el('rect', {x:M.l, y:0, width:(k === 'Other' ? IW : 0), height:H});
+    cp.appendChild(cr); defs.appendChild(cp); svg.appendChild(defs);
+
+    const g = el('g', {'clip-path':`url(#${cid})`, opacity:(k === 'Other' ? 0 : 1)});
+    g.style.transition = 'opacity .8s ease';
+    g.appendChild(el('path', {d:dstr, fill:fills[k],
+      opacity:(k === 'Other' ? .75 : 1), stroke:P.navy, 'stroke-width':.7}));
+    svg.appendChild(g);
+
+    const mid = top[top.length-1][1] - pts[pts.length-1][1]/2;
+    const t = el('text', {class:'endlabel', x:M.l+IW+9, y:y(mid)+3.5,
+      fill:(k === 'Other') ? P.paleblue : fills[k],
+      'font-weight':(k === 'Other') ? 400 : 600, opacity:0});
+    t.textContent = shownAs[k];
+    t.style.transition = 'opacity .5s ease';
+    svg.appendChild(t);
+
+    bands.push({key:k, cr, group:g, label:t, last:pts[pts.length-1][1]});
+  });
+
+  const labEl = document.getElementById('r5-lab');
+  const valEl = document.getElementById('r5-val');
+  let played = false;
+  const ease = t => 1 - Math.pow(1 - t, 2);
+
+  function wipe(b, dur, label) {
+    return new Promise(res => {
+      const t0 = performance.now();
+      labEl.textContent = label;
+      function tick(now) {
+        const raw = Math.min(1, (now - t0) / dur), e = ease(raw);
+        b.cr.setAttribute('width', IW * e);
+        valEl.textContent = '$' + (b.last * e / 1000).toFixed(1) + 'B';
+        if (raw < 1) requestAnimationFrame(tick);
+        else { b.label.style.opacity = 1; res(); }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  function settle() {
+    labEl.textContent = '2024 share of US basic research funding';
+    valEl.textContent = 'Federal 40%  \u00b7  Business 34%';
+  }
+
+  async function play() {
+    if (played) return;
+    played = true;
+    await wipe(bands[0], 1500, 'Federal, 2024');
+    await new Promise(r => setTimeout(r, 340));
+    await wipe(bands[1], 1500, 'Business, 2024');
+    await new Promise(r => setTimeout(r, 260));
+    bands[2].group.style.opacity = 1;
+    bands[2].label.style.opacity = 1;
+    setTimeout(settle, 620);
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    bands.forEach(b => {
+      b.cr.setAttribute('width', IW);
+      b.group.style.opacity = 1;
+      b.label.style.opacity = 1;
+    });
+    settle();
+  }
+  play.reset = () => {
+    played = false;
+    bands.forEach(b => {
+      b.cr.setAttribute('width', b.key === 'Other' ? IW : 0);
+      b.group.style.opacity = b.key === 'Other' ? 0 : 1;
+      b.label.style.opacity = 0;
+    });
+    labEl.textContent = 'Federal, 2024';
+    valEl.textContent = '$0B';
+  };
+  return play;
+})();
+
+/* ---- 9. international, PPP ---- */
+const C3 = (() => {
+  const f = frame(document.getElementById('c3'), [1990, 2024], [0, 160000],
+    v => '$' + (v/1000) + 'B', [1990,1996,2002,2008,2014,2020,2024],
+    [0,40000,80000,120000,160000]);
+  const {svg, x, y} = f;
+
+  const cfg = [['USA','United States'],['CHN','China'],['JPN','Japan'],
+               ['KOR','Korea'],['FRA','France']];
+  const cols = {USA:'#69A9E3', CHN:'#C46B5A', JPN:'#AAC09C', KOR:'#F2C744', FRA:'#D4E3FF'};
+
+  const others = [];
+  cfg.slice(1).forEach(([code, name]) => {
+    const pts = DATA.ppp[code];
+    const p = el('path', {class:'series', d:pathOf(pts, x, y), stroke:cols[code],
+      'stroke-width':2.6, opacity:0});
+    p.style.transition = 'opacity .7s ease';
+    svg.appendChild(p);
+    const last = pts[pts.length-1];
+    const t = el('text', {class:'endlabel', x:x(last[0])+9, y:y(last[1])+3.5,
+      fill:cols[code], opacity:0});
+    t.textContent = name;
+    t.style.transition = 'opacity .7s ease';
+    svg.appendChild(t);
+    others.push(p, t);
+  });
+
+  const us = DATA.ppp.USA;
+  const glow = el('path', {class:'series', d:pathOf(us, x, y),
+    stroke:P.lightblue, 'stroke-width':9, opacity:.15});
+  const line = el('path', {class:'series', d:pathOf(us, x, y),
+    stroke:P.lightblue, 'stroke-width':3.2});
+  svg.appendChild(glow); svg.appendChild(line);
+  const usLab = el('text', {class:'endlabel', x:x(2024)+9, y:y(145483)+3.5,
+    fill:P.lightblue, 'font-weight':600, opacity:0});
+  usLab.textContent = 'United States';
+  usLab.style.transition = 'opacity .5s ease';
+  svg.appendChild(usLab);
+
+  const head = el('circle', {r:5.5, fill:'#fff', stroke:P.navy, 'stroke-width':2, opacity:0});
+  svg.appendChild(head);
+
+  const labEl = document.getElementById('r3-lab');
+  const valEl = document.getElementById('r3-val');
+
+  let total = 2000;
+  try { total = line.getTotalLength(); } catch (e) {}
+  [glow, line].forEach(p => {
+    p.setAttribute('stroke-dasharray', total);
+    p.setAttribute('stroke-dashoffset', total);
+  });
+
+  function settle() {
+    labEl.textContent = 'Basic research spending';
+    valEl.textContent = 'US still spends about 2x China';
+  }
+
+  let played = false;
+  function play() {
+    if (played) return;
+    played = true;
+    const DUR = 2200, t0 = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 2.1);
+    function tick(now) {
+      const raw = Math.min(1, (now - t0) / DUR), e = ease(raw);
+      [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', total * (1 - e)));
+      const i = Math.min(us.length - 1, Math.round(e * (us.length - 1)));
+      head.setAttribute('cx', x(us[i][0]));
+      head.setAttribute('cy', y(us[i][1]));
+      head.setAttribute('opacity', 1);
+      labEl.textContent = 'United States, ' + us[i][0];
+      valEl.textContent = '$' + (us[i][1]/1000).toFixed(1) + 'B';
+      if (raw < 1) requestAnimationFrame(tick);
+      else {
+        head.setAttribute('opacity', 0);
+        usLab.style.opacity = 1;
+        others.forEach(o => o.style.opacity = 1);
+        setTimeout(settle, 700);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', 0));
+    usLab.style.opacity = 1;
+    others.forEach(o => o.style.opacity = 1);
+    settle();
+  }
+  play.reset = () => {
+    played = false;
+    [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', total));
+    usLab.style.opacity = 0;
+    others.forEach(o => o.style.opacity = 0);
+    head.setAttribute('opacity', 0);
+    labEl.textContent = 'United States';
+    valEl.textContent = '$0B';
+  };
+  return play;
+})();
+
+/* ---- 11. agency to field sankey ---- */
+const C4 = (() => {
+  const mount = document.getElementById('c4');
+  const SW = 1000, SH = 430, NW = 14;
+  const LX = 150, RX = 742, TOP = 32, BOT = 414;
+  const svg = el('svg', {viewBox:`0 0 ${SW} ${SH}`, role:'img'});
+  mount.appendChild(svg);
+
+  const agOrder = ['NIH','NSF','DOD','NASA','USDA','Other'];
+  const agName  = {NIH:'NIH', NSF:'NSF', DOD:'DOD', NASA:'NASA',
+                   USDA:'USDA', Other:'Other agencies'};
+  const fdOrder = ['Life Sciences','Physical Sciences','Computer Sci & Math','Engineering',
+                   'Environmental/Geo','Psychology','Social Sciences','Other Fields'];
+  const fdName  = {'Life Sciences':'Life sciences','Physical Sciences':'Physical sciences',
+                   'Computer Sci & Math':'Computer sci & math','Engineering':'Engineering',
+                   'Environmental/Geo':'Environmental/geo','Psychology':'Psychology',
+                   'Social Sciences':'Social sciences','Other Fields':'Other fields'};
+  const fdColor = {'Life Sciences':P.lightblue,'Physical Sciences':P.sage,
+                   'Computer Sci & Math':P.paleblue,'Engineering':'#F2F2F2',
+                   'Environmental/Geo':P.teal,'Psychology':P.gray,
+                   'Social Sciences':P.grayL,'Other Fields':P.grayXL};
+
+  const F = {};
+  DATA.sankey.forEach(r => {
+    F[r.Agency] = F[r.Agency] || {};
+    F[r.Agency][r.Field] = r.Value;
+  });
+  const agTot = {}, fdTot = {};
+  agOrder.forEach(a => agTot[a] = Object.values(F[a] || {}).reduce((s, v) => s + v, 0));
+  fdOrder.forEach(f => fdTot[f] = agOrder.reduce((s, a) => s + ((F[a] || {})[f] || 0), 0));
+  const grand = agOrder.reduce((s, a) => s + agTot[a], 0);
+
+  const AGAP = 11, FGAP = 8;
+  const agSpan = (BOT - TOP) - AGAP * (agOrder.length - 1);
+  const fdSpan = (BOT - TOP) - FGAP * (fdOrder.length - 1);
+  const agPx = v => v / grand * agSpan;
+  const fdPx = v => v / grand * fdSpan;
+
+  const agY = {}, fdY = {};
+  let cy = TOP;
+  agOrder.forEach(a => { agY[a] = cy; cy += agPx(agTot[a]) + AGAP; });
+  cy = TOP;
+  fdOrder.forEach(f => { fdY[f] = cy; cy += fdPx(fdTot[f]) + FGAP; });
+
+  const fdGroup = {}, fdClipRect = {};
+  fdOrder.forEach(f => {
+    const cid = 'wipe5-' + f.replace(/[^A-Za-z]/g, '');
+    const clip = el('clipPath', {id:cid});
+    const cr = el('rect', {x:LX, y:0, width:0, height:SH});
+    const defs = el('defs', {});
+    clip.appendChild(cr); defs.appendChild(clip); svg.appendChild(defs);
+    const g = el('g', {'clip-path':`url(#${cid})`});
+    svg.appendChild(g);
+    fdGroup[f] = g; fdClipRect[f] = cr;
+  });
+
+  const aCur = {}, fCur = {};
+  agOrder.forEach(a => aCur[a] = agY[a]);
+  fdOrder.forEach(f => fCur[f] = fdY[f]);
+
+  const ribbons = [], agBits = [], fdBits = [];
+  agOrder.forEach(a => {
+    fdOrder.forEach(f => {
+      const v = (F[a] || {})[f] || 0;
+      if (v <= 0) return;
+      const ha = agPx(v), hf = fdPx(v);
+      const a0 = aCur[a], a1 = a0 + ha, f0 = fCur[f], f1 = f0 + hf;
+      aCur[a] = a1; fCur[f] = f1;
+      const mx = (LX + NW + RX) / 2;
+      const d = `M${LX + NW} ${a0} C${mx} ${a0} ${mx} ${f0} ${RX} ${f0} ` +
+                `L${RX} ${f1} C${mx} ${f1} ${mx} ${a1} ${LX + NW} ${a1} Z`;
+      const path = el('path', {d, fill:fdColor[f], opacity:.6});
+      path.style.transition = 'opacity .28s ease';
+      fdGroup[f].appendChild(path);
+      ribbons.push({el:path, agency:a, field:f});
+    });
+  });
+
+  const headAg = el('text', {class:'endlabel', x:LX + NW/2, y:TOP - 13,
+    'text-anchor':'middle', fill:P.lightblue, 'letter-spacing':'0.16em'});
+  headAg.textContent = 'AGENCIES';
+  svg.appendChild(headAg);
+  const headFd = el('text', {class:'endlabel', x:RX + NW/2, y:TOP - 13,
+    'text-anchor':'middle', fill:P.lightblue, 'letter-spacing':'0.16em'});
+  headFd.textContent = 'FIELDS';
+  svg.appendChild(headFd);
+
+  const nodes = el('g', {});
+  svg.appendChild(nodes);
+  const fdNode = {}, fdLabel = {};
+
+  agOrder.forEach(a => {
+    const g = el('g', {});
+    g.style.cursor = 'pointer';
+    g.style.transition = 'opacity .28s ease';
+    g.appendChild(el('rect', {x:LX - 140, y:agY[a] - 4, width:140 + NW,
+      height:agPx(agTot[a]) + 8, fill:'transparent'}));
+    g.appendChild(el('rect', {x:LX, y:agY[a], width:NW, height:agPx(agTot[a]),
+      fill: a === 'NIH' ? '#C3DAF5' : P.paleblue, rx:1.5}));
+    const t = el('text', {class:'endlabel', x:LX - 9, y:agY[a] + agPx(agTot[a])/2 + 3.5,
+      'text-anchor':'end', fill:'#fff', 'font-weight':600});
+    t.textContent = agName[a];
+    g.appendChild(t);
+    const s = el('text', {class:'endlabel', x:LX - 9,
+      y:agY[a] + agPx(agTot[a])/2 + 15, 'text-anchor':'end', fill:P.paleblue,
+      'font-size':'11.5px', opacity:.75});
+    s.textContent = '$' + agTot[a].toFixed(1) + 'B';
+    g.appendChild(s);
+    nodes.appendChild(g);
+    agBits.push({el:g, key:a});
+  });
+
+  fdOrder.forEach(f => {
+    const g = el('g', {});
+    g.style.cursor = 'pointer';
+    g.style.transition = 'opacity .28s ease';
+    g.appendChild(el('rect', {x:RX, y:fdY[f] - 4, width:NW + 230,
+      height:fdPx(fdTot[f]) + 8, fill:'transparent'}));
+    const r = el('rect', {x:RX, y:fdY[f], width:NW, height:fdPx(fdTot[f]),
+      fill:fdColor[f], rx:1.5, opacity:0});
+    r.style.transition = 'opacity .45s ease';
+    g.appendChild(r);
+    const t = el('text', {class:'endlabel', x:RX + NW + 9,
+      y:fdY[f] + fdPx(fdTot[f])/2 + 3.5, fill:'#fff', opacity:0});
+    t.textContent = fdName[f] + '  $' + fdTot[f].toFixed(1) + 'B';
+    t.style.transition = 'opacity .45s ease';
+    g.appendChild(t);
+    nodes.appendChild(g);
+    fdNode[f] = r; fdLabel[f] = t;
+    fdBits.push({el:g, key:f});
+  });
+
+  const SPAN = RX + NW - LX;
+  let hoverOn = false;
+
+  function isolate(kind, key) {
+    ribbons.forEach(r => {
+      const on = (kind === 'agency') ? r.agency === key : r.field === key;
+      r.el.style.opacity = on ? 0.9 : 0.05;
+    });
+    agBits.forEach(o => o.el.style.opacity = (kind === 'agency' && o.key !== key) ? 0.28 : 1);
+    fdBits.forEach(o => o.el.style.opacity = (kind === 'field'  && o.key !== key) ? 0.28 : 1);
+  }
+  function clearIsolate() {
+    ribbons.forEach(r => r.el.style.opacity = 0.6);
+    agBits.forEach(o => o.el.style.opacity = 1);
+    fdBits.forEach(o => o.el.style.opacity = 1);
+  }
+
+  agBits.forEach(o => {
+    o.el.addEventListener('mouseenter', () => { if (hoverOn) isolate('agency', o.key); });
+    o.el.addEventListener('mouseleave', () => { if (hoverOn) clearIsolate(); });
+  });
+  fdBits.forEach(o => {
+    o.el.addEventListener('mouseenter', () => { if (hoverOn) isolate('field', o.key); });
+    o.el.addEventListener('mouseleave', () => { if (hoverOn) clearIsolate(); });
+  });
+
+  function drawField(f, dur) {
+    return new Promise(res => {
+      const t0 = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 2);
+      function tick(now) {
+        const raw = Math.min(1, (now - t0) / dur), e = ease(raw);
+        fdClipRect[f].setAttribute('width', SPAN * e);
+        if (raw < 1) requestAnimationFrame(tick);
+        else { fdNode[f].style.opacity = 1; fdLabel[f].style.opacity = 1; res(); }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  let played = false;
+  async function play() {
+    if (played) return;
+    played = true;
+    await drawField('Life Sciences', 1400);
+    await new Promise(r => setTimeout(r, 280));
+    await drawField('Physical Sciences', 800);
+    await drawField('Computer Sci & Math', 620);
+    await drawField('Engineering', 620);
+    await drawField('Environmental/Geo', 560);
+    await drawField('Psychology', 520);
+    await drawField('Social Sciences', 520);
+    await drawField('Other Fields', 560);
+    hoverOn = true;
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    fdOrder.forEach(f => {
+      fdClipRect[f].setAttribute('width', SPAN);
+      fdNode[f].style.opacity = 1;
+      fdLabel[f].style.opacity = 1;
+    });
+    hoverOn = true;
+  }
+  play.reset = () => {
+    played = false; hoverOn = false;
+    fdOrder.forEach(f => {
+      fdClipRect[f].setAttribute('width', 0);
+      fdNode[f].style.opacity = 0;
+      fdLabel[f].style.opacity = 0;
+    });
+    clearIsolate();
+  };
+  return play;
+})();
+
+/* ---- 13. federal vs industry portfolio overlap ---- */
+const C6 = (() => {
+  const mount = document.getElementById('c6');
+  const SW = 1040, SH = 436;
+  const ML = 214, MR = 44, MT = 12, MB = 54;
+  const PW = SW - ML - MR, PH = SH - MT - MB;
+  const svg = el('svg', {viewBox:`0 0 ${SW} ${SH}`, role:'img'});
+  mount.appendChild(svg);
+
+  const rows = DATA.compare;
+  const ROW = PH / rows.length;
+  const BAR = 22, GAP = 5;
+  const maxPct = 46;
+  const wOf = p => p / maxPct * PW;
+
+  const axis = el('g', {class:'axis'});
+  svg.appendChild(axis);
+  [0, 10, 20, 30, 40].forEach(v => {
+    axis.appendChild(el('line', {class:'gridline', x1:ML + wOf(v), x2:ML + wOf(v),
+      y1:MT, y2:MT + PH}));
+    const t = el('text', {x:ML + wOf(v), y:MT + PH + 18, 'text-anchor':'middle'});
+    t.textContent = v + '%';
+    axis.appendChild(t);
+  });
+
+  const bars = [], whites = [], rowLabels = [];
+
+  rows.forEach((d, i) => {
+    const yMid = MT + i * ROW + ROW / 2;
+    const yF = yMid - BAR - GAP / 2;
+    const yB = yMid + GAP / 2;
+    const shared = Math.min(d.Federal, d.Business);
+
+    const lab = el('text', {class:'endlabel', x:ML - 11, y:yMid + 3.5,
+      'text-anchor':'end', fill:'#fff'});
+    lab.textContent = d.Label;
+    lab.style.transition = 'opacity .5s ease';
+    svg.appendChild(lab);
+    rowLabels.push({el:lab, field:d.Field});
+
+    const rf = el('rect', {x:ML, y:yF, width:0, height:BAR, fill:P.lightblue, rx:2});
+    rf.style.transition = 'opacity .55s ease';
+    svg.appendChild(rf);
+    bars.push({el:rf, w:wOf(d.Federal), field:d.Field});
+
+    const rb = el('rect', {x:ML, y:yB, width:0, height:BAR, fill:P.sage, rx:2});
+    rb.style.transition = 'opacity .55s ease';
+    svg.appendChild(rb);
+    bars.push({el:rb, w:wOf(d.Business), field:d.Field});
+
+    const wf = el('rect', {x:ML, y:yF, width:0, height:BAR, fill:'#ffffff', rx:2});
+    wf.style.transition = 'opacity .5s ease';
+    svg.appendChild(wf);
+    const wb = el('rect', {x:ML, y:yB, width:0, height:BAR, fill:'#ffffff', rx:2});
+    wb.style.transition = 'opacity .5s ease';
+    svg.appendChild(wb);
+    whites.push({el:wf, w:wOf(shared), field:d.Field},
+                {el:wb, w:wOf(shared), field:d.Field});
+  });
+
+  const key = el('g', {opacity:0});
+  key.style.transition = 'opacity .5s ease';
+  key.appendChild(el('rect', {x:ML, y:MT + PH + 30, width:11, height:11, fill:P.lightblue, rx:1.5}));
+  const k1 = el('text', {class:'endlabel', x:ML + 17, y:MT + PH + 39.5, fill:P.paleblue});
+  k1.textContent = 'Federal';
+  key.appendChild(k1);
+  key.appendChild(el('rect', {x:ML + 86, y:MT + PH + 30, width:11, height:11, fill:P.sage, rx:1.5}));
+  const k2 = el('text', {class:'endlabel', x:ML + 103, y:MT + PH + 39.5, fill:P.paleblue});
+  k2.textContent = 'Business';
+  key.appendChild(k2);
+  const k3r = el('rect', {x:ML + 186, y:MT + PH + 30, width:11, height:11, fill:'#fff',
+    rx:1.5, opacity:0});
+  k3r.style.transition = 'opacity .5s ease';
+  key.appendChild(k3r);
+  const k3 = el('text', {class:'endlabel', x:ML + 203, y:MT + PH + 39.5, fill:P.paleblue, opacity:0});
+  k3.textContent = 'Shared';
+  k3.style.transition = 'opacity .5s ease';
+  key.appendChild(k3);
+  svg.appendChild(key);
+
+  const ease = t => 1 - Math.pow(1 - t, 2);
+  let grown = false, filled = false;
+
+  function growAll() {
+    if (grown) return;
+    grown = true;
+    const t0 = performance.now(), DUR = 1500;
+    key.style.opacity = 1;
+    function tick(now) {
+      const e = ease(Math.min(1, (now - t0) / DUR));
+      bars.forEach(b => b.el.setAttribute('width', b.w * e));
+      if (e < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function fillShared() {
+    if (filled) return;
+    filled = true;
+    const t0 = performance.now(), DUR = 1400;
+    k3r.style.opacity = 1;
+    k3.style.opacity = 1;
+    function tick(now) {
+      const e = ease(Math.min(1, (now - t0) / DUR));
+      whites.forEach(w => w.el.setAttribute('width', w.w * e));
+      if (e < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function focus(fields) {
+    growAll();
+    whites.forEach(w => w.el.style.opacity = 0);
+    k3r.style.opacity = 0;
+    k3.style.opacity = 0;
+    const on = f => fields.indexOf(f) >= 0;
+    bars.forEach(b => b.el.style.opacity = on(b.field) ? 1 : .2);
+    rowLabels.forEach(r => r.el.style.opacity = on(r.field) ? 1 : .3);
+  }
+
+  function step(n) {
+    if (n === 0) {
+      growAll();
+      whites.forEach(w => w.el.style.opacity = 0);
+      k3r.style.opacity = 0;
+      k3.style.opacity = 0;
+      bars.forEach(b => b.el.style.opacity = 1);
+      rowLabels.forEach(r => r.el.style.opacity = 1);
+      return;
+    }
+    if (n === 1) {
+      growAll();
+      fillShared();
+      k3r.style.opacity = 1;
+      k3.style.opacity = 1;
+      bars.forEach(b => b.el.style.opacity = 1);
+      whites.forEach(w => w.el.style.opacity = 1);
+      rowLabels.forEach(r => r.el.style.opacity = 1);
+      return;
+    }
+    if (n === 2) { focus(['Life Sciences']); return; }
+    if (n === 3) { focus(['Physical Sciences','Environmental/Geosciences']); return; }
+    if (n === 4) { focus(['Engineering','Computer Sci & Mathematics']); return; }
+  }
+
+  step.reset = () => {
+    grown = false; filled = false;
+    bars.forEach(b => { b.el.setAttribute('width', 0); b.el.style.opacity = 1; });
+    whites.forEach(w => { w.el.setAttribute('width', 0); w.el.style.opacity = 1; });
+    rowLabels.forEach(r => r.el.style.opacity = 1);
+    k3r.style.opacity = 0; k3.style.opacity = 0; key.style.opacity = 0;
+  };
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    grown = true; filled = true;
+    key.style.opacity = 1; k3r.style.opacity = 1; k3.style.opacity = 1;
+    bars.forEach(b => b.el.setAttribute('width', b.w));
+    whites.forEach(w => w.el.setAttribute('width', w.w));
+  }
+  return step;
+})();
+
+/* ---- basic / applied / development ---- */
+const CBAD = (() => {
+  const yrs = DATA.rdtype.Basic.map(p => p[0]);
+  const f = frame(document.getElementById('cBAD'), [yrs[0], yrs[yrs.length-1]], [0, 170000],
+    v => '$' + (v/1000) + 'B', [1975,1985,1995,2005,2015,2026],
+    [0,40000,80000,120000,160000]);
+  const {svg, x, y} = f;
+
+  const order = ['Basic','Applied','Developmental'];
+  const shown = {Basic:'Basic research', Applied:'Applied research', Developmental:'Development'};
+  const fills = {Basic:P.lightblue, Applied:P.sage, Developmental:P.gray};
+  const base = {}; yrs.forEach(yr => base[yr] = 0);
+  const bands = [];
+
+  order.forEach((k, idx) => {
+    const pts = DATA.rdtype[k], top = [], bot = [];
+    pts.forEach(([yr, v]) => {
+      bot.push([yr, base[yr]]);
+      base[yr] += v;
+      top.push([yr, base[yr]]);
+    });
+    const dstr = pathOf(top, x, y) + ' ' +
+      bot.slice().reverse().map(p => 'L' + x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1)).join(' ') + ' Z';
+    const cid = 'wipeBAD-' + idx;
+    const defs = el('defs', {});
+    const cp = el('clipPath', {id:cid});
+    const cr = el('rect', {x:M.l, y:0, width:0, height:H});
+    cp.appendChild(cr); defs.appendChild(cp); svg.appendChild(defs);
+    const g = el('g', {'clip-path':`url(#${cid})`});
+    g.appendChild(el('path', {d:dstr, fill:fills[k], opacity:1, stroke:P.navy, 'stroke-width':.7}));
+    svg.appendChild(g);
+    const mid = top[top.length-1][1] - pts[pts.length-1][1]/2;
+    const lb = el('text', {class:'endlabel', x:M.l+IW+9, y:y(mid)+3.5,
+      fill:fills[k], 'font-weight':600, opacity:0});
+    lb.textContent = shown[k];
+    lb.style.transition = 'opacity .5s ease';
+    svg.appendChild(lb);
+    const last = pts[pts.length-1][1];
+    const at2025 = (DATA.rdtype[k].find(p => p[0] === 2025) || [0,last])[1];
+    bands.push({key:k, cr, label:lb, last:at2025});
+  });
+
+  const labEl = document.getElementById('rBAD-lab');
+  const valEl = document.getElementById('rBAD-val');
+  const ease = t => 1 - Math.pow(1 - t, 2);
+  const total2025 = bands.reduce((s, b) => s + b.last, 0);
+
+  function wipe(b, dur) {
+    return new Promise(res => {
+      const t0 = performance.now();
+      labEl.textContent = shown[b.key] + ', 2025';
+      function tick(now) {
+        const raw = Math.min(1, (now - t0) / dur), e = ease(raw);
+        b.cr.setAttribute('width', IW * e);
+        valEl.textContent = '$' + (b.last * e / 1000).toFixed(1) + 'B';
+        if (raw < 1) requestAnimationFrame(tick);
+        else { b.label.style.opacity = 1; res(); }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  function settle() {
+    labEl.textContent = 'Basic research share of federal R&D, 2025';
+    valEl.textContent = Math.round(bands[0].last / total2025 * 100) + '%';
+  }
+
+  let played = false;
+  async function play() {
+    if (played) return;
+    played = true;
+    await wipe(bands[0], 1300);
+    await new Promise(r => setTimeout(r, 300));
+    await wipe(bands[1], 1100);
+    await new Promise(r => setTimeout(r, 220));
+    await wipe(bands[2], 1100);
+    setTimeout(settle, 480);
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    bands.forEach(b => { b.cr.setAttribute('width', IW); b.label.style.opacity = 1; });
+    settle();
+  }
+  play.reset = () => {
+    played = false;
+    bands.forEach(b => { b.cr.setAttribute('width', 0); b.label.style.opacity = 0; });
+    labEl.textContent = 'Basic research';
+    valEl.textContent = '$0B';
+  };
+  return play;
+})();
+
+/* ---- FY2026 request to enacted, percent change ---- */
+const CPBR = (() => {
+  const mount = document.getElementById('cPBR');
+  const SW = 1040, SH = 400;
+  const ML = 160, MR = 130, MT = 18, MB = 52;
+  const PW = SW - ML - MR, PH = SH - MT - MB;
+  const svg = el('svg', {viewBox:`0 0 ${SW} ${SH}`, role:'img'});
+  mount.appendChild(svg);
+
+  const CUT = '#B5645A', GROW = '#6F9C7A';
+  const LO = -60, HI = 25;
+  const rows = DATA.pbr.map(d => ({
+    name: d.Agency,
+    req: (d.Request - d.Prior) / d.Prior * 100,
+    enc: (d.Enacted - d.Prior) / d.Prior * 100
+  })).sort((a, b) => a.req - b.req);
+
+  const x = v => ML + (v - LO) / (HI - LO) * PW;
+  const ZX = x(0);
+
+  const axis = el('g', {class:'axis'});
+  svg.appendChild(axis);
+  [-60,-40,-20,0,20].forEach(v => {
+    axis.appendChild(el('line', {class:'gridline', x1:x(v), x2:x(v), y1:MT - 6, y2:MT + PH,
+      stroke: v === 0 ? '#F2F2F2' : undefined, 'stroke-width': v === 0 ? 1.6 : undefined}));
+    const t = el('text', {x:x(v), y:MT + PH + 20, 'text-anchor':'middle'});
+    t.textContent = v + '%';
+    axis.appendChild(t);
+  });
+
+  const ROW = PH / rows.length, BAR = Math.min(22, ROW - 12);
+  const bars = [];
+  rows.forEach((d, i) => {
+    const y = MT + i * ROW + (ROW - BAR) / 2;
+    const lab = el('text', {class:'endlabel', x:ML - 13, y:y + BAR/2 + 4,
+      'text-anchor':'end', fill:'#fff'});
+    lab.textContent = d.name;
+    svg.appendChild(lab);
+    const r = el('rect', {x:ZX, y, width:0, height:BAR, fill:CUT, rx:2});
+    svg.appendChild(r);
+    const v = el('text', {class:'endlabel', x:ZX, y:y + BAR/2 + 4, fill:'#fff', opacity:0});
+    v.style.transition = 'opacity .4s ease';
+    svg.appendChild(v);
+    bars.push({el:r, val:v, y, req:d.req, enc:d.enc});
+  });
+
+  function place(b, pct) {
+    const w = Math.abs(x(pct) - ZX);
+    b.el.setAttribute('x', pct < 0 ? ZX - w : ZX);
+    b.el.setAttribute('width', w);
+    b.el.setAttribute('fill', pct < 0 ? CUT : GROW);
+    const txt = (pct > 0 ? '+' : '') + pct.toFixed(0) + '%';
+    b.val.textContent = txt;
+    if (pct < 0) {
+      b.val.setAttribute('x', ZX - w - 9);
+      b.val.setAttribute('text-anchor', 'end');
+    } else {
+      b.val.setAttribute('x', ZX + w + 9);
+      b.val.setAttribute('text-anchor', 'start');
+    }
+  }
+
+  const labEl = document.getElementById('rPBR-lab');
+  const CAPTION = {
+    0: 'FY2026 presidential budget request compared to FY2025 enacted (\u221233% overall)',
+    1: 'FY2026 enacted compared to FY2025 enacted (+4% overall)'
+  };
+  const note  = document.getElementById('pbr-note');
+  const ease  = t => 1 - Math.pow(1 - t, 2);
+  const T = DATA.pbrTotals;
+  const reqTot = (T.Request - T.Prior) / T.Prior * 100;
+  const encTot = (T.Enacted - T.Prior) / T.Prior * 100;
+  let cur = -1, raf = null;
+
+  function animateTo(n) {
+    const from = bars.map(b => (cur >= 1 ? b.enc : cur === 0 ? b.req : 0));
+    const to   = bars.map(b => (n   >= 1 ? b.enc : b.req));
+    const fromTot = cur >= 1 ? encTot : cur === 0 ? reqTot : 0;
+    const toTot   = n   >= 1 ? encTot : reqTot;
+    labEl.textContent = CAPTION[n >= 1 ? 1 : 0];
+    if (raf) cancelAnimationFrame(raf);
+    const t0 = performance.now(), DUR = cur < 0 ? 1500 : 1700;
+    function tick(now) {
+      const r = Math.min(1, (now - t0) / DUR), e = ease(r);
+      bars.forEach((b, i) => place(b, from[i] + (to[i] - from[i]) * e));
+      if (r < 1) raf = requestAnimationFrame(tick);
+      else { bars.forEach(b => b.val.style.opacity = 1); raf = null; }
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function step(n) {
+    const target = Math.min(n, 1);
+    if (target !== Math.min(cur, 1) || cur < 0) animateTo(target);
+    cur = n;
+    note.classList.toggle('is-on', n >= 2);
+  }
+
+  step.reset = () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = null; cur = -1;
+    bars.forEach(b => { place(b, 0); b.val.style.opacity = 0; });
+    labEl.textContent = CAPTION[0];
+    note.classList.remove('is-on');
+  };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    cur = 2;
+    bars.forEach(b => { place(b, b.enc); b.val.style.opacity = 1; });
+    labEl.textContent = CAPTION[1];
+    note.classList.add('is-on');
+  }
+  return step;
+})();
+
+/* ---- who performs federally funded basic research ---- */
+const CPERF = (() => {
+  const yrs = DATA.performer.HigherEd.map(p => p[0]);
+  const last = yrs[yrs.length - 1];
+  const f = frame(document.getElementById('cPERF'), [yrs[0], last], [0, 100],
+    v => v + '%', [1953,1963,1973,1983,1993,2003,2013,2024], [0,25,50,75,100]);
+  const {svg, x, y} = f;
+
+  const order = ['HigherEd','FFRDC','Intramural','Nonprofit','Business'];
+  const shown = {HigherEd:'Higher education', FFRDC:'FFRDC',
+                 Intramural:'Federal intramural', Nonprofit:'Nonprofit', Business:'Business'};
+  /* locked across the piece: federal blue, business sage */
+  const fills = {HigherEd:'#9CC5EA', FFRDC:'#35619C', Intramural:'#69A9E3',
+                 Nonprofit:'#2E7D6B', Business:'#AAC09C'};
+
+  const cp = el('clipPath', {id:'wipePERF'});
+  const cr = el('rect', {x:M.l, y:0, width:0, height:H});
+  const defs = el('defs', {});
+  cp.appendChild(cr); defs.appendChild(cp); svg.appendChild(defs);
+  const g = el('g', {'clip-path':'url(#wipePERF)'});
+  svg.appendChild(g);
+
+  const base = {}; yrs.forEach(yr => base[yr] = 0);
+  const labels = [];
+  order.forEach(k => {
+    const pts = DATA.performer[k], top = [], bot = [];
+    pts.forEach(([yr, v]) => {
+      bot.push([yr, base[yr]]);
+      base[yr] += v;
+      top.push([yr, base[yr]]);
+    });
+    const d = pathOf(top, x, y) + ' ' +
+      bot.slice().reverse().map(p => 'L' + x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1)).join(' ') + ' Z';
+    g.appendChild(el('path', {d, fill:fills[k], stroke:P.navy, 'stroke-width':.7}));
+    const mid = top[top.length-1][1] - pts[pts.length-1][1]/2;
+    const lb = el('text', {class:'endlabel', x:M.l+IW+9, y:y(mid)+3.5,
+      fill:'#fff', 'font-weight': k === 'HigherEd' ? 600 : 400, opacity:0});
+    lb.textContent = shown[k];
+    lb.style.transition = 'opacity .5s ease';
+    svg.appendChild(lb);
+    labels.push({el:lb, y:y(mid)+3.5});
+  });
+  labels.sort((a, b) => a.y - b.y);
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].y - labels[i-1].y < 15) labels[i].y = labels[i-1].y + 15;
+  }
+  const over = labels[labels.length-1].y - (M.t + IH);
+  if (over > 0) labels.forEach(l => l.y -= over);
+  labels.forEach(l => l.el.setAttribute('y', l.y.toFixed(1)));
+
+  const labEl = document.getElementById('rPERF-lab');
+  const valEl = document.getElementById('rPERF-val');
+  const heLast = DATA.performer.HigherEd[DATA.performer.HigherEd.length-1][1];
+  const ease = t => 1 - Math.pow(1 - t, 2);
+
+  function paint(pct) {
+    cr.setAttribute('width', IW * pct);
+    valEl.textContent = (heLast * pct).toFixed(0) + '%';
+  }
+  function finish() {
+    valEl.textContent = heLast.toFixed(0) + '%';
+    labels.forEach(l => l.el.style.opacity = 1);
+  }
+
+  let played = false;
+  function play() {
+    if (played) return;
+    played = true;
+    labEl.textContent = 'Higher education, FY' + last;
+    const t0 = performance.now(), DUR = 2100;
+    function tick(now) {
+      const raw = Math.min(1, (now - t0) / DUR);
+      paint(ease(raw));
+      if (raw < 1) requestAnimationFrame(tick);
+      else finish();
+    }
+    requestAnimationFrame(tick);
+  }
+  play.reset = () => {
+    played = false;
+    cr.setAttribute('width', 0);
+    valEl.textContent = '0%';
+    labels.forEach(l => l.el.style.opacity = 0);
+  };
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true; paint(1); finish();
+  }
+  return play;
+})();
+
+/* ---- scroll wiring ---- */
+
+/* Text blocks reveal once when their chapter comes into view. */
+const textObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-in'); });
+}, {threshold:0.06});
+document.querySelectorAll('.chapter').forEach(c => textObs.observe(c));
+
+/* Charts play when they reach their pinned slot and reset once the panel has
+   properly left the screen, so scrolling back replays them. A small movement at
+   the edge triggers neither. */
+const CHARTS = {panel1:C1, panelBAD:CBAD, panelPERF:CPERF, panel2:C2,
+                panel3:C3, panel4:C4, panel5:C5, panel6:C6, panelPBR:CPBR};
+
+const panelObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const fn = CHARTS[e.target.id];
+    if (!fn) return;
+    if (e.intersectionRatio >= 0.92 && !e.target.dataset.playing) {
+      e.target.dataset.playing = '1';
+      e.target.classList.add('is-in');
+      setTimeout(() => { fn.length === 0 ? fn() : fn(0); }, 380);
+    } else if (e.intersectionRatio <= 0.1 && e.target.dataset.playing) {
+      delete e.target.dataset.playing;
+      if (fn.reset) fn.reset();
+      STEPPERS.forEach(s => s.reset());
+      e.target.parentElement.querySelectorAll('.narr-line')
+        .forEach((p, i) => p.classList.toggle('is-on', i === 0));
+    }
+  });
+}, {threshold:[0, 0.1, 0.5, 0.75, 0.92, 1]});
+Object.keys(CHARTS).forEach(id => {
+  const n = document.getElementById(id);
+  if (n) panelObs.observe(n);
+});
+
+/* Step chapters resolve their state from scroll position, so scrolling back up
+   steps backwards instead of sticking at the furthest point reached. */
+const STEPPERS = [];
+function wireSteps(attr, fn, lineSel) {
+  const sents = [...document.querySelectorAll('.step-sentinel[data-' + attr + ']')];
+  if (!sents.length) return;
+  const lines = [...document.querySelectorAll(lineSel)];
+  const st = {cur: -1};
+  st.resolve = () => {
+    let n = 0;
+    sents.forEach(s => {
+      if (s.getBoundingClientRect().top < window.innerHeight * 0.34) n = +s.dataset[attr];
+    });
+    if (n === st.cur) return;
+    st.cur = n;
+    if (fn) fn(n);
+    lines.forEach(p => p.classList.toggle('is-on', +p.dataset.narr <= n));
+  };
+  st.reset = () => { st.cur = -1; };
+  STEPPERS.push(st);
+  const io = new IntersectionObserver(() => st.resolve(), {threshold:[0, 0.5, 1]});
+  sents.forEach(s => io.observe(s));
+}
+wireSteps('c6step',   C6,   '#n6 .narr-line');
+wireSteps('pbrstep',  CPBR, '#nPBR .narr-line');
+wireSteps('perfstep', null, '#nPERF .narr-line');
+window.addEventListener('scroll', () => STEPPERS.forEach(s => s.resolve()), {passive:true});
+</script>
+</body>
+</html>
