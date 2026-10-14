@@ -259,7 +259,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
       <div class="fig-sub">Constant 2017 dollars, stacked</div>
       <div class="readout"><span class="lab" id="rBAD-lab">Basic research</span><span class="val" id="rBAD-val">$0B</span></div>
       <div id="cBAD"></div>
-      <div class="fig-src">Source: American Association for the Advancement of Science, estimates built on OMB budget authority data, as used in the first tab of the HistoricSpendDash dashboard. Series are summed from the agency rows so that all three types reconcile to the same universe. FY2026 reflects enacted appropriations. Data provided by AAAS to Potomac Institute as of March 1, 2026.</div>
+      <div class="fig-src">Source: American Association for the Advancement of Science estimates built on OMB data and provided by AAAS to Potomac Institute as of March 1, 2026.</div>
     </div>
   </div>
   <div class="chapter-tail"></div>
@@ -298,7 +298,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
       <div class="readout"><span class="lab">HHS/NIH share of federal basic research</span><span class="val" id="r2-val">15% in 1954</span></div>
       <div id="c2"></div>
       <div class="fig-note is-on">HHS/NIH went from 15 percent of federal basic research obligations in 1954 ($0.1B constant 2017) to 50 percent in 2025 ($17.5B constant 2017).</div>
-      <div class="fig-src">Sources: FYs 1967&ndash;2025 agency obligations from NSF NCSES, Survey of Federal Funds for R&amp;D, Table 26 (agency) and Table 1 (total) in NSF 26-316 (FYs 2024&ndash;25), with FY2023 final values from NSF 25-328 Table 26. FYs 1954&ndash;1966 reconstructed from original NSF Federal Funds for R&amp;D survey volumes (V.4&ndash;V.17), cross-checked against CRS Report 95-1209, &ldquo;Federal R&amp;D Funding: A Concise History&rdquo; (Aug 14, 1998). NASA pre-1967 figures computed as residual against the NSF 26-316 Table 1 restated total. Constant 2017$ via GDP chained price index, OMB Historical Table 10.1. FY2025 preliminary.</div>
+      <div class="fig-src">Sources: FYs 1967&ndash;2025 agency obligations from NSF NCSES, Survey of Federal Funds for R&amp;D, Table 26 (agency) and Table 1 (total) in NSF 26-316 (FYs 2024&ndash;25), with FY2023 final values from NSF 25-328 Table 26. FYs 1954&ndash;1966 reconstructed from original NSF Federal Funds for R&amp;D survey volumes (V.4&ndash;V.17), cross-checked against CRS Report 95-1209, &ldquo;Federal R&amp;D Funding: A Concise History&rdquo; (Aug 14, 1998). NASA pre-1967 figures computed as residual against the NSF 26-316 Table 1 restated total. Constant 2017$ calculated using GDP chained price index from OMB Historical Table 10.1. FY2025 preliminary.</div>
     </div>
   </div>
   <div class="chapter-tail"></div>
@@ -397,7 +397,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
       <div class="fig-sub">Budget authority, % change</div>
       <div class="fig-subsub" id="rPBR-lab">FY2026 presidential budget request compared to FY2025 enacted</div>
       <div id="cPBR"></div>
-      <div class="fig-note" id="pbr-note"><p>The <a href="https://www.whitehouse.gov/omb/information-resources/budget/" target="_blank" rel="noopener">FY2027 President&rsquo;s Budget Request</a>, released April 3, 2026, proposed deep to moderate cuts to the topline discretionary budgets of NSF, EPA, NASA, Agriculture, HHS, Commerce, and Energy, but did not provide specific details on R&amp;D. As of September 2026, the government is operating under a continuing resolution with no FY2027 appropriations bills enacted.</p></div>
+      <div class="fig-note" id="pbr-note"><p>The <a href="https://www.whitehouse.gov/omb/information-resources/budget/" target="_blank" rel="noopener">FY2027 President&rsquo;s Budget Request</a>, released April 3, 2026, proposed deep to moderate cuts to the topline discretionary budgets of NSF, EPA, NASA, Agriculture, HHS, Commerce, and Energy, but did not provide specific details on basic research. As of September 2026, the government is operating under a continuing resolution with no FY2027 appropriations bills enacted.</p></div>
       <div class="fig-src">Source: American Association for the Advancement of Science R&amp;D appropriations tracking, FY2026 columns for the President&rsquo;s Budget Request and final enacted appropriations, measured against FY2025 enacted. Figures are basic research budget authority. FY2027 topline figures are from OMB Summary Table S-3, discretionary budget authority by agency.</div>
     </div>
   </div>
@@ -409,7 +409,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 <!-- closing -->
 <section class="closing" id="closing">
   <p class="closing-line">It remains to be seen how Congress will carry forward the legacy of federal support for basic research.</p>
-  <div class="closing-meta">Potomac Institute for Policy Studies &middot; Analysis and visualization: R Loewen &middot; Updated 15 September 2026</div>
+  <div class="closing-meta">Potomac Institute for Policy Studies &middot; Analysis and visualization: R Loewen &middot; Updated 14 October 2026</div>
   <div class="closing-sources">
     <div class="cs-head">References</div>
     <ul>
@@ -1546,27 +1546,36 @@ document.querySelectorAll('.chapter').forEach(c => textObs.observe(c));
 const CHARTS = {panel1:C1, panelBAD:CBAD, panelPERF:CPERF, panel2:C2,
                 panel3:C3, panel4:C4, panel5:C5, panel6:C6, panelPBR:CPBR};
 
-const panelObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    const fn = CHARTS[e.target.id];
-    if (!fn) return;
-    if (e.intersectionRatio >= 0.92 && !e.target.dataset.playing) {
-      e.target.dataset.playing = '1';
-      e.target.classList.add('is-in');
-      setTimeout(() => { fn.length === 0 ? fn() : fn(0); }, 380);
-    } else if (e.intersectionRatio <= 0.1 && e.target.dataset.playing) {
-      delete e.target.dataset.playing;
+const PANELS = Object.keys(CHARTS)
+  .map(id => document.getElementById(id)).filter(Boolean);
+
+/* A panel is parked when its top edge has reached the pinned slot under the
+   text band and it still fills the viewport. Charts play on parking, not on
+   visibility, so nothing draws while the panel is still sliding up. */
+function resolvePanels() {
+  PANELS.forEach(el => {
+    const fn   = CHARTS[el.id];
+    const slot = parseFloat(getComputedStyle(el).top) || 0;
+    const r    = el.getBoundingClientRect();
+    const parked = r.top <= slot + 2 && r.bottom >= window.innerHeight * 0.9;
+
+    if (parked && !el.dataset.playing) {
+      el.dataset.playing = '1';
+      el.classList.add('is-in');
+      setTimeout(() => { fn.length === 0 ? fn() : fn(0); }, 160);
+    } else if (el.dataset.playing &&
+               (r.top > slot + 60 || r.bottom < window.innerHeight * 0.6)) {
+      delete el.dataset.playing;
       if (fn.reset) fn.reset();
       STEPPERS.forEach(s => s.reset());
-      e.target.parentElement.querySelectorAll('.narr-line')
+      el.parentElement.querySelectorAll('.narr-line')
         .forEach((p, i) => p.classList.toggle('is-on', i === 0));
     }
   });
-}, {threshold:[0, 0.1, 0.5, 0.75, 0.92, 1]});
-Object.keys(CHARTS).forEach(id => {
-  const n = document.getElementById(id);
-  if (n) panelObs.observe(n);
-});
+}
+window.addEventListener('scroll', resolvePanels, {passive:true});
+window.addEventListener('resize', resolvePanels);
+requestAnimationFrame(resolvePanels);
 
 /* Step chapters resolve their state from scroll position, so scrolling back up
    steps backwards instead of sticking at the furthest point reached. */
