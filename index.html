@@ -59,11 +59,10 @@ h1 .em{color:var(--pips-lightblue)}
   position:sticky; top:0; z-index:3;
   background:var(--pips-navy);
   height:var(--band); display:flex; align-items:stretch;
-  padding:0 40px;
   border-bottom:1px solid rgba(105,169,227,.22);
 }
 .pin > .pin-inner:not(.narration){display:flex; align-items:center}
-.pin-inner{max-width:1060px; margin:0 auto; width:100%}
+.pin-inner{max-width:1060px; margin:0 auto; width:100%; padding:0 40px}
 .reveal-line{
   font-size:clamp(1.25rem,2.8vw,2.1rem); font-weight:400; line-height:1.28;
   letter-spacing:-.018em; color:#fff; max-width:880px;
@@ -105,7 +104,7 @@ h1 .em{color:var(--pips-lightblue)}
 }
 .narration{
   height:100%; display:flex; flex-direction:column; justify-content:center;
-  gap:9px; max-width:1000px;
+  gap:9px;
 }
 .narr-line{
   font-size:clamp(1.08rem,1.85vw,1.42rem); font-weight:400; line-height:1.34;
@@ -114,19 +113,18 @@ h1 .em{color:var(--pips-lightblue)}
   transition:opacity .55s ease, transform .55s ease;
 }
 .narr-line.is-on{opacity:1; transform:translateY(0)}
-#nPERF .narr-line{font-size:clamp(1.18rem,2.5vw,1.88rem); line-height:1.26; letter-spacing:-.016em}
 .narr-line strong{font-weight:600; color:var(--pips-lightblue)}
 .narr-line[data-narr="0"]{
   font-size:clamp(1.25rem,2.8vw,2.1rem); line-height:1.24; letter-spacing:-.018em;
 }
-#chapter1{--aspect:2.5;  --furniture:224px}
-#chapter2{--aspect:2.5;  --furniture:352px; --band:24vh}
-#chapter3{--aspect:2.5;  --furniture:239px}
-#chapter4{--aspect:2.33; --furniture:239px}
-#chapter5{--aspect:2.5;  --furniture:239px}
-#chapter6{--aspect:2.39; --furniture:199px}
-#chapterBAD{--aspect:2.5;  --furniture:239px}
-#chapterPBR{--aspect:2.48; --furniture:239px}
+#chapter1{--aspect:2.5;  --furniture:215px}
+#chapter2{--aspect:2.5;  --furniture:322px; --band:21vh}
+#chapter3{--aspect:2.5;  --furniture:215px}
+#chapter4{--aspect:2.33; --furniture:170px}
+#chapter5{--aspect:2.5;  --furniture:215px}
+#chapter6{--aspect:2.39; --furniture:209px}
+#chapterBAD{--aspect:2.5;  --furniture:196px}
+#chapterROI{--aspect:2.5;  --furniture:215px}
 #pbr-note{
   border-left:3px solid var(--pips-lightblue);
   background:rgba(105,169,227,.09);
@@ -158,10 +156,13 @@ h1 .em{color:var(--pips-lightblue)}
   border-bottom:1px solid rgba(105,169,227,.45); padding-bottom:1px;
 }
 .closing-sources a:hover{color:var(--pips-lightblue); border-bottom-color:var(--pips-lightblue)}
-#chapterPBR{--aspect:2.6; --furniture:372px}
-#chapterPERF{--aspect:2.5; --furniture:246px}
+#chapterPBR{--aspect:2.6; --furniture:328px}
+#chapterPERF{--aspect:2.5; --furniture:215px}
 .step-sentinel{height:82vh}
-.ch1-pin{display:flex; flex-direction:column; justify-content:center; height:100%; gap:14px}
+/* higher specificity than .pin > .pin-inner:not(.narration), which would
+   otherwise centre these lines horizontally inside the column */
+.pin > .pin-inner.ch1-pin{display:flex; flex-direction:column; align-items:flex-start;
+  justify-content:center; height:100%; gap:14px}
 .interjection{
   font-family:'IBM Plex Mono',monospace;
   font-size:clamp(.9rem,1.5vw,1.08rem); color:var(--pips-lightblue);
@@ -191,9 +192,12 @@ h1 .em{color:var(--pips-lightblue)}
   font-size:.8rem; color:var(--pips-gray-l); opacity:.72; margin-top:12px;
   line-height:1.5; max-width:760px;
 }
+/* Charts are left-aligned, not centered, so every chart's left edge sits on the
+   same line as its title. --furniture is the non-chart height inside .cp-inner
+   plus the panel's 26px padding-top; it is measured, not guessed. */
 svg{width:100%; height:auto; display:block; overflow:visible;
   max-width:calc((100vh - var(--band) - var(--furniture,215px)) * var(--aspect,2.5));
-  margin:0 auto}
+  margin:0}
 
 
 .axis line{stroke:rgba(212,227,255,.28); stroke-width:1}
@@ -206,7 +210,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 @media (max-width:860px){
   .cover{padding-left:22px; padding-right:22px}
   .chapter{--band:26vh}
-  .pin{padding:0 22px}
+  .pin-inner{padding:0 22px}
   .cp-inner{padding:0 22px}
   .pin-spacer{height:48vh}
   .chapter-tail{height:60vh}
@@ -229,7 +233,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 </header>
 
 <!-- 2 + 3 -->
-<section class="chapter" id="chapter1" style="--band:34vh">
+<section class="chapter" id="chapter1" style="--band:31vh">
   <div class="pin"><div class="pin-inner ch1-pin">
     <p class="reveal-line">Since the government began measuring federal investment in the 1950s, we see a long and bipartisan history of continued support.</p>
     <p class="interjection" id="interject">&mdash; Wait, I don&rsquo;t know what <a href="definitions.html" target="_blank" rel="noopener">basic research</a> is yet.</p>
@@ -249,8 +253,9 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 
 <!-- basic / applied / development -->
 <section class="chapter" id="chapterBAD">
-  <div class="pin"><div class="pin-inner">
+  <div class="pin"><div class="pin-inner ch1-pin">
     <p class="reveal-line">Basic research is only one part of the larger federal research portfolio, which also includes applied research and development.</p>
+    <p class="interjection" id="interjectBAD">&mdash; Wait, I don&rsquo;t know what <a href="definitions.html" target="_blank" rel="noopener">basic research</a> is yet.</p>
   </div></div>
   <div class="pin-spacer"></div>
   <div class="chart-panel" id="panelBAD">
@@ -266,10 +271,9 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 </section>
 
 <!-- funding vs performance vs consumption -->
-<section class="chapter" id="chapterPERF" style="--band:46vh">
+<section class="chapter" id="chapterPERF">
   <div class="pin"><div class="pin-inner narration" id="nPERF">
     <p class="narr-line is-on" data-narr="0">We are looking at how basic research is <strong>funded</strong>. Who <strong>performs</strong> the research is different: academic institutions are the largest performers of federally funded basic research.</p>
-    <p class="narr-line" data-narr="1">The important missing piece is <strong>consumption and impact</strong>. It is very hard to track who uses federally funded basic research and to measure its impact.</p>
   </div></div>
   <div class="pin-spacer"></div>
   <div class="chart-panel" id="panelPERF">
@@ -281,7 +285,22 @@ svg{width:100%; height:auto; display:block; overflow:visible;
       <div class="fig-src">Source: NSF National Center for Science and Engineering Statistics (NCSES), National Patterns of R&amp;D Resources (NSF 26-313, released February 2026). Table 7, basic research expenditures by funding sector and performer, federal funding block. Data for 2023 and 2024 are subject to revision.</div>
     </div>
   </div>
-  <div class="step-sentinel" data-perfstep="1"></div>
+  <div class="chapter-tail"></div>
+</section>
+
+<!-- the missing piece: consumption and impact -->
+<section class="chapter" id="chapterROI">
+  <div class="pin"><div class="pin-inner narration" id="nROI">
+    <p class="narr-line is-on" data-narr="0">The important missing piece is <strong>consumption and impact</strong>. It is very hard to track who uses federally funded basic research and to measure its impact.</p>
+  </div></div>
+  <div class="pin-spacer"></div>
+  <div class="chart-panel" id="panelROI">
+    <div class="cp-inner">
+      <div class="fig-title">Return on investment</div>
+      <div class="fig-sub">How do you measure the impact?</div>
+      <div id="cROI"></div>
+    </div>
+  </div>
   <div class="chapter-tail"></div>
 </section>
 
@@ -360,7 +379,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 </section>
 
 <!-- 12 + 13 -->
-<section class="chapter" id="chapter6" style="--band:37vh">
+<section class="chapter" id="chapter6" style="--band:clamp(282px,34vh,340px)">
   <div class="pin"><div class="pin-inner narration" id="n6">
     <p class="narr-line is-on" data-narr="0">The government basic research portfolio looks a lot like the industry portfolio.</p>
     <p class="narr-line" data-narr="1">The overlap coefficient in 2023 was 70%, meaning 70 cents out of every dollar of funding are spent on a similar portfolio.</p>
@@ -371,7 +390,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
   <div class="pin-spacer"></div>
   <div class="chart-panel" id="panel6">
     <div class="cp-inner">
-      <div class="fig-title" id="c6-title">Basic research by field of R&amp;D: federal and industry</div>
+      <div class="fig-title" id="c6-title">Basic research by field of R&amp;D: federal and industry, 2023</div>
       <div class="fig-sub">Share of each funder&rsquo;s own portfolio, percent</div>
       <div id="c6"></div>
       <div class="fig-src">Sources: National Science Foundation, National Center for Science and Engineering Statistics, Federal Funds for Research and Development, NSF 25-328, Table 29, FY2023; and Business Enterprise Research and Development Survey, NSF 25-354, Table 27, 2023. Industry figures are company-funded and company-performed basic research. Industry sectors are mapped to fields of R&amp;D by NAICS crosswalk. Psychology is grouped with other fields on the federal side to match the industry taxonomy.</div>
@@ -385,10 +404,10 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 </section>
 
 <!-- FY2026 request to enacted -->
-<section class="chapter" id="chapterPBR" style="--band:24vh">
+<section class="chapter" id="chapterPBR" style="--band:clamp(172px,21vh,230px)">
   <div class="pin"><div class="pin-inner narration" id="nPBR">
     <p class="narr-line is-on" data-narr="0">The FY2026 President&rsquo;s Budget Request proposed deep cuts to federal basic research.</p>
-    <p class="narr-line" data-narr="1">Congress restored the cuts and added a small amount, barely beating inflation: the 4% nominal increase is 1.8% in real terms.</p>
+    <p class="narr-line" data-narr="1">Congress restored the cuts and added a small amount, barely beating inflation: the 4% nominal increase overall is 1.8% in real terms.</p>
   </div></div>
   <div class="pin-spacer"></div>
   <div class="chart-panel" id="panelPBR">
@@ -409,7 +428,7 @@ svg{width:100%; height:auto; display:block; overflow:visible;
 <!-- closing -->
 <section class="closing" id="closing">
   <p class="closing-line">It remains to be seen how Congress will carry forward the legacy of federal support for basic research.</p>
-  <div class="closing-meta">Potomac Institute for Policy Studies &middot; Analysis and visualization: R Loewen &middot; Updated 14 October 2026</div>
+  <div class="closing-meta">Potomac Institute for Policy Studies &middot; Analysis and visualization: R Loewen &middot; Updated 5 November 2026</div>
   <div class="closing-sources">
     <div class="cs-head">References</div>
     <ul>
@@ -516,7 +535,7 @@ const C1 = (() => {
     const DUR = 2600, t0 = performance.now();
     const ease = t => 1 - Math.pow(1 - t, 2.2);
     function tick(now) {
-      const raw = Math.min(1, (now - t0) / DUR), e = ease(raw);
+      const raw = Math.min(1, Math.max(0, (now - t0) / DUR)), e = ease(raw);
       [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', total * (1 - e)));
       const i = Math.min(pts.length - 1, Math.round(e * (pts.length - 1)));
       head.setAttribute('cx', x(pts[i][0]));
@@ -626,7 +645,7 @@ const C2 = (() => {
     const DUR = 2400, t0 = performance.now();
     const ease = t => 1 - Math.pow(1 - t, 2);
     function tick(now) {
-      const raw = Math.min(1, (now - t0) / DUR), e = ease(raw);
+      const raw = Math.min(1, Math.max(0, (now - t0) / DUR)), e = ease(raw);
       cr.setAttribute('width', IW * e);
       valEl.textContent = '15% in 1954  \u2192  ' + Math.round(15 + 35 * e) + '% in 2025';
       if (raw < 1) requestAnimationFrame(tick);
@@ -715,7 +734,7 @@ const C5 = (() => {
       const t0 = performance.now();
       labEl.textContent = label;
       function tick(now) {
-        const raw = Math.min(1, (now - t0) / dur), e = ease(raw);
+        const raw = Math.min(1, Math.max(0, (now - t0) / dur)), e = ease(raw);
         b.cr.setAttribute('width', IW * e);
         valEl.textContent = '$' + (b.last * e / 1000).toFixed(1) + 'B';
         if (raw < 1) requestAnimationFrame(tick);
@@ -828,7 +847,7 @@ const C3 = (() => {
     const DUR = 2200, t0 = performance.now();
     const ease = t => 1 - Math.pow(1 - t, 2.1);
     function tick(now) {
-      const raw = Math.min(1, (now - t0) / DUR), e = ease(raw);
+      const raw = Math.min(1, Math.max(0, (now - t0) / DUR)), e = ease(raw);
       [glow, line].forEach(p => p.setAttribute('stroke-dashoffset', total * (1 - e)));
       const i = Math.min(us.length - 1, Math.round(e * (us.length - 1)));
       head.setAttribute('cx', x(us[i][0]));
@@ -1029,7 +1048,7 @@ const C4 = (() => {
       const t0 = performance.now();
       const ease = t => 1 - Math.pow(1 - t, 2);
       function tick(now) {
-        const raw = Math.min(1, (now - t0) / dur), e = ease(raw);
+        const raw = Math.min(1, Math.max(0, (now - t0) / dur)), e = ease(raw);
         fdClipRect[f].setAttribute('width', SPAN * e);
         if (raw < 1) requestAnimationFrame(tick);
         else { fdNode[f].style.opacity = 1; fdLabel[f].style.opacity = 1; res(); }
@@ -1164,7 +1183,7 @@ const C6 = (() => {
     const t0 = performance.now(), DUR = 1500;
     key.style.opacity = 1;
     function tick(now) {
-      const e = ease(Math.min(1, (now - t0) / DUR));
+      const e = ease(Math.min(1, Math.max(0, (now - t0) / DUR)));
       bars.forEach(b => b.el.setAttribute('width', b.w * e));
       if (e < 1) requestAnimationFrame(tick);
     }
@@ -1178,7 +1197,7 @@ const C6 = (() => {
     k3r.style.opacity = 1;
     k3.style.opacity = 1;
     function tick(now) {
-      const e = ease(Math.min(1, (now - t0) / DUR));
+      const e = ease(Math.min(1, Math.max(0, (now - t0) / DUR)));
       whites.forEach(w => w.el.setAttribute('width', w.w * e));
       if (e < 1) requestAnimationFrame(tick);
     }
@@ -1288,7 +1307,7 @@ const CBAD = (() => {
       const t0 = performance.now();
       labEl.textContent = shown[b.key] + ', 2025';
       function tick(now) {
-        const raw = Math.min(1, (now - t0) / dur), e = ease(raw);
+        const raw = Math.min(1, Math.max(0, (now - t0) / dur)), e = ease(raw);
         b.cr.setAttribute('width', IW * e);
         valEl.textContent = '$' + (b.last * e / 1000).toFixed(1) + 'B';
         if (raw < 1) requestAnimationFrame(tick);
@@ -1300,6 +1319,8 @@ const CBAD = (() => {
   function settle() {
     labEl.textContent = 'Basic research share of federal R&D, 2025';
     valEl.textContent = Math.round(bands[0].last / total2025 * 100) + '%';
+    const ij = document.getElementById('interjectBAD');
+    if (ij) ij.classList.add('is-on');
   }
 
   let played = false;
@@ -1323,7 +1344,44 @@ const CBAD = (() => {
     bands.forEach(b => { b.cr.setAttribute('width', 0); b.label.style.opacity = 0; });
     labEl.textContent = 'Basic research';
     valEl.textContent = '$0B';
+    const ij = document.getElementById('interjectBAD');
+    if (ij) ij.classList.remove('is-on');
   };
+  return play;
+})();
+
+/* ---- the missing piece: a frame with nothing in it ----
+   Bare axes, no ticks and no numbers, because there is no series to draw. */
+const CROI = (() => {
+  const mount = document.getElementById('cROI');
+  const svg = el('svg', {viewBox:`0 0 ${W} ${H}`, role:'img',
+    'aria-label':'An empty chart frame holding a question mark'});
+  mount.appendChild(svg);
+
+  const ax = el('g', {class:'axis'});
+  svg.appendChild(ax);
+  ax.appendChild(el('line', {x1:M.l, y1:M.t,      x2:M.l,      y2:M.t + IH}));
+  ax.appendChild(el('line', {x1:M.l, y1:M.t + IH, x2:M.l + IW, y2:M.t + IH}));
+
+  const q = el('text', {x:M.l + IW/2, y:M.t + IH/2, 'text-anchor':'middle',
+    'dominant-baseline':'central', fill:P.lightblue,
+    'font-family':"'IBM Plex Sans',sans-serif", 'font-size':170, 'font-weight':600});
+  q.textContent = '?';
+  q.style.opacity = 0;
+  q.style.transition = 'opacity 1.2s ease';
+  svg.appendChild(q);
+
+  let played = false;
+  function play() {
+    if (played) return;
+    played = true;
+    q.style.opacity = 1;
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    played = true;
+    q.style.opacity = 1;
+  }
+  play.reset = () => { played = false; q.style.opacity = 0; };
   return play;
 })();
 
@@ -1410,7 +1468,7 @@ const CPBR = (() => {
     if (raf) cancelAnimationFrame(raf);
     const t0 = performance.now(), DUR = cur < 0 ? 1500 : 1700;
     function tick(now) {
-      const r = Math.min(1, (now - t0) / DUR), e = ease(r);
+      const r = Math.min(1, Math.max(0, (now - t0) / DUR)), e = ease(r);
       bars.forEach((b, i) => place(b, from[i] + (to[i] - from[i]) * e));
       if (r < 1) raf = requestAnimationFrame(tick);
       else { bars.forEach(b => b.val.style.opacity = 1); raf = null; }
@@ -1513,7 +1571,7 @@ const CPERF = (() => {
     labEl.textContent = 'Higher education, FY' + last;
     const t0 = performance.now(), DUR = 2100;
     function tick(now) {
-      const raw = Math.min(1, (now - t0) / DUR);
+      const raw = Math.min(1, Math.max(0, (now - t0) / DUR));
       paint(ease(raw));
       if (raw < 1) requestAnimationFrame(tick);
       else finish();
@@ -1543,8 +1601,9 @@ document.querySelectorAll('.chapter').forEach(c => textObs.observe(c));
 /* Charts play when they reach their pinned slot and reset once the panel has
    properly left the screen, so scrolling back replays them. A small movement at
    the edge triggers neither. */
-const CHARTS = {panel1:C1, panelBAD:CBAD, panelPERF:CPERF, panel2:C2,
-                panel3:C3, panel4:C4, panel5:C5, panel6:C6, panelPBR:CPBR};
+const CHARTS = {panel1:C1, panelBAD:CBAD, panelPERF:CPERF, panelROI:CROI,
+                panel2:C2, panel3:C3, panel4:C4, panel5:C5, panel6:C6,
+                panelPBR:CPBR};
 
 const PANELS = Object.keys(CHARTS)
   .map(id => document.getElementById(id)).filter(Boolean);
@@ -1602,7 +1661,6 @@ function wireSteps(attr, fn, lineSel) {
 }
 wireSteps('c6step',   C6,   '#n6 .narr-line');
 wireSteps('pbrstep',  CPBR, '#nPBR .narr-line');
-wireSteps('perfstep', null, '#nPERF .narr-line');
 window.addEventListener('scroll', () => STEPPERS.forEach(s => s.resolve()), {passive:true});
 </script>
 </body>
